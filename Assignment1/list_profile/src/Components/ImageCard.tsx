@@ -29,12 +29,12 @@ export default class ImageCard extends Component<ImageCardPropTypes> {
 
 
     return (
-      <div className="card mb-3 " style={{maxWidth:'930px',  maxHeight:'220px', padding:'10px', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'}}>
+      <div className="card mb-3 " style={{maxWidth:'1110px',  maxHeight:'220px', padding:'10px', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'}}>
         <div className="row g-0">
-          <div className="col-md-4">
+          <div className="col-md-3">
             <img src= {`https://avatars.dicebear.com/v2/avataaars/${username}.svg?options[mood][]=happy`} className="img-fluid rounded-start" alt= {username} style={{height: '200px', width: '200px'}}></img>
           </div>
-          <div className="col-md-8">
+          <div className="col-md-9">
            {this.renderBody()}
           </div>
         </div>

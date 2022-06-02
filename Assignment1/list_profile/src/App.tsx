@@ -15,6 +15,8 @@ export default class App extends Component<MyProps, MyState> {
     const getUsers =async () => {
       const response = await fetch("https://jsonplaceholder.typicode.com/users");
       const users = await response.json();
+
+
       this.setState({data: users, isLoaded:true});
     }
 
