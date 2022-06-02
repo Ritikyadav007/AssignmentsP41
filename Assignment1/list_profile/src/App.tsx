@@ -1,51 +1,43 @@
 import React, { Component } from "react";
+import ImageCard from "./Components/ImageCard";
+import './App.css';
 
 type MyProps = {};
 
-// type User=  {
-//     id,	// The user's id
-//     username,
-//     name,
-//     email,
-//     phone,
-//     website,
-//     address: {
-// 	  street, // Address line 1
-// 	  suite, // Address line 2
-// 	  city,
-// 	  zipcode
-//     },
-//     company: {
-// 	  name, // The name of company where the user works
-//     }
-//   }
-
 type MyState = {
-  data: { id: number }[];
+  data: any;
   isLoaded: boolean; // like this
 };
 export default class App extends Component<MyProps, MyState> {
   state = { data: [], isLoaded: false };
 
   componentDidMount() {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((res) => res.json())
-      .then((json) => {
-        this.setState({ data: json, isLoaded: true });
-      });
+    const getUsers =async () => {
+      const response = await fetch("https://jsonplaceholder.typicode.com/users");
+      const users = await response.json();
+      this.setState({data: users, isLoaded:true});
+    }
+
+    getUsers();
   }
+
   render() {
     var { data, isLoaded } = this.state;
     if (!isLoaded) {
-      return <div>Loding..</div>;
+      return (
+        <div className="spinner">
+          <div className="bounce1"></div>
+          <div className="bounce2"></div>
+          <div className="bounce3"></div>
+        </div>
+      )
     } else {
       return (
-        <div>
+        <div className="App" >
           {data.length > 0 &&
             data.map((item) => {
-              console.log(item);
-              const { id, username } = item;
-              return <h1>{id}</h1>;
+              const { id } = item;
+              return <div className="App-container"><ImageCard key={id} user={item} /></div>;
             })}
         </div>
       );
