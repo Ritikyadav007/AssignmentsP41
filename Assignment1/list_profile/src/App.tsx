@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ImageCard from "./Components/ImageCard";
+import UserCard from "./Components/UserCard";
 import './App.css';
 
 type MyProps = {};
@@ -57,7 +57,7 @@ export default class App extends Component<MyProps, MyState> {
           {data.length > 0 &&
             data.map((item) => {
               const { id } = item;
-              return <div className="App-container"><ImageCard key={id} user={item} /></div>;
+              return <div className="App-container"><UserCard key={id} user={item} /></div>;
             })}
         </div>
       );
