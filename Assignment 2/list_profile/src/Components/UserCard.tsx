@@ -1,5 +1,6 @@
 import React from "react";
 import { user } from "../App";
+import 'antd/dist/antd.css';
 import { Card, Avatar } from 'antd';
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 
@@ -13,26 +14,48 @@ const { Meta } = Card;
 const UserCard = (props: UserCardPropTypes)=> {
     const { email, phone, name, website, company, address } = props.user;
     return(
-    <Card
-    style={{ width: 300 }}
-    cover={
-      <img
-        alt="example"
-        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+      <Card
+      style={{
+        width: 300,
+      }}
+      cover={
+        <img
+          alt="example"
+          src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+        />
+      }
+      actions={[
+        <SettingOutlined key="setting" />,
+        <EditOutlined key="edit" />,
+        <EllipsisOutlined key="ellipsis" />,
+      ]}
+    >
+      <Meta
+        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+        title="Card title"
+        description="This is the description"
       />
-    }
-    actions={[
-      <SettingOutlined key="setting" />,
-      <EditOutlined key="edit" />,
-      <EllipsisOutlined key="ellipsis" />,
-    ]}
-  >
-    <Meta
-      avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-      title="Card title"
-      description="This is the description"
-    />
-  </Card>
+    </Card>
+  //   <Card
+  //   style={{ width: 300 }}
+  //   cover={
+  //     <img
+  //       alt="example"
+  //       src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+  //     />
+  //   }
+  //   actions={[
+  //     <SettingOutlined key="setting" />,
+  //     <EditOutlined key="edit" />,
+  //     <EllipsisOutlined key="ellipsis" />,
+  //   ]}
+  // >
+  //   <Meta
+  //     avatar={<Avatar src="https://joeschmoe.io/api/v1/random" style={{height:"10px", width:"10px"}} />}
+  //     title="Card title"
+  //     description="This is the description"
+  //   />
+  // </Card>
     )
   }
 

@@ -56,9 +56,9 @@ const App = (props: MyProps, state: MyState) => {
     //       data.map((item) => {
             const { id } = data[1];
             return (
-              <div className="App-container">
+             
                 <UserCard key={id} user={data[1]} />
-              </div>
+              
             );
     //       })}
     //   </div>
