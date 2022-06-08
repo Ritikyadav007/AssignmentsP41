@@ -1,16 +1,18 @@
- /* .App {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+ .App {
+  display: grid;
+  padding : 30px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 30px;
  }
  
  .App-container {
-  width: 50%;
+  max-width: 282px;
+  max-height: 442px;
+  
  
 } 
 
- */
+
 
 
 .spinner {
