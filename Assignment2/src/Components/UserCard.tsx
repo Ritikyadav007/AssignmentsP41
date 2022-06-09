@@ -3,12 +3,14 @@ import { user } from "../redux/reducers";
 import 'antd/dist/antd.css';
 import { Card, Avatar } from 'antd';
 import { HeartTwoTone, DeleteFilled, EditOutlined, MailOutlined, PhoneOutlined, GlobalOutlined, HeartFilled} from '@ant-design/icons';
+import UserForm from "./UserForm";
 
 
 type UserCardPropTypes = {
   user: user;
   deleteUser: ReactEventHandler;
   likeUser: ReactEventHandler;
+  editUser: ReactEventHandler;
 };
 
 const { Meta } = Card;
@@ -32,7 +34,7 @@ const UserCard = (props: UserCardPropTypes)=> {
       }
       actions={[
         <HeartIcon key="like"  onClick={props.likeUser}/>,
-        <EditOutlined key="edit" />,
+        <EditOutlined key="edit" onClick= {props.editUser}/>,
         <DeleteFilled key="delete" onClick={props.deleteUser}/>,
       ]}
     >
