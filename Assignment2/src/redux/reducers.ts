@@ -15,16 +15,19 @@ export type user = {
     name: string;
   };
   isLiked?: boolean;
+  
 };
 
 export type ApiState = {
   users: Array<user>;
   isLoading: boolean;
+  isEdited?: boolean;
 };
 
 const initialState = {
   users: [],
   isLoading : false,
+  isEdited: false,
 };
 
 type Action = any;
@@ -42,6 +45,9 @@ export const reducers = (state: ApiState = initialState, action: Action) => {
         (userItem) => userItem.id !== action.payload
       );
       return { ...state, users: updatedUsers };
+
+    case "EDIT_USER":
+      return { ...state, isEdited: action.payload };
 
     case "LIKE_USER":
       const updatedUsersAfterLike = state.users.map((item) =>
