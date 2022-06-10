@@ -3,7 +3,7 @@ import { user } from "../redux/reducers";
 import 'antd/dist/antd.css';
 import { Card, Avatar } from 'antd';
 import { HeartTwoTone, DeleteFilled, EditOutlined, MailOutlined, PhoneOutlined, GlobalOutlined, HeartFilled} from '@ant-design/icons';
-import UserForm from "./UserForm";
+
 
 
 type UserCardPropTypes = {
@@ -16,7 +16,7 @@ type UserCardPropTypes = {
 const { Meta } = Card;
 
 const UserCard = (props: UserCardPropTypes)=> {
-    const { username, email, phone, name, website, isLiked = false } = props.user;
+    const { username, email, phone, name, website, isLiked = false,} = props.user;
     const HeartIcon = isLiked? HeartFilled: HeartTwoTone; 
     
 
