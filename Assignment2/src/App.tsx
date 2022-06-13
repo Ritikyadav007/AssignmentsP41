@@ -96,6 +96,7 @@ const App = () => {
                       key={id}
                       user={item}
                       deleteUser={() => handleDelete(id)}
+
                       likeUser={() => handleLikeUser(id)}
                       editUser={() => handleEdit(id)}
                     />
