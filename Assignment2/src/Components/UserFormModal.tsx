@@ -9,25 +9,28 @@ type UserCardPropTypes = {
   visible: boolean;
   user: user;
   closeModal: ReactEventHandler;
-  onSubmitchange?: ReactEventHandler;
+  onSubmitChange: Function;
 };
 
 export default function UserFormModal(props: UserCardPropTypes) {
-  const { visible, user, closeModal } = props;
+  const { visible, user, closeModal, onSubmitChange } = props;
+  const [updatedUser, setUpdatedUser] = useState(user);
 
-  const [isFieldEmpty, setIsFieldEmpty] = useState<Boolean>(false);
-  const validateForm = (values:any) =>{
+  const getNewUser = (value: user) => {
+    setUpdatedUser(value);
+    console.log(value);
+  };
 
-  }
+  const validateForm = (values: any) => {};
 
-  return (
+  return visible ? (
     <Modal
       title="Change User Details"
       visible={visible}
-      onOk={!isFieldEmpty ? closeModal : () => {}}
+      onOk={onSubmitChange(updatedUser)}
       onCancel={closeModal}
     >
-      {visible && <UserForm user={user} />}
+      {<UserForm user={user} newUser={getNewUser} />}
     </Modal>
-  );
+  ) : null;
 }
