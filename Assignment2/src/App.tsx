@@ -3,14 +3,14 @@ import UserCard from "./Components/UserCard";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { ApiState } from "./redux/reducers";
-import UserForm from "./Components/UserForm";
+import UserFormModal from "./Components/UserFormModal";
+import SearchBar from "./Components/SearchBar";
 
 const App = () => {
   const users = useSelector<ApiState, ApiState["users"]>(
     (state) => state.users
   );
   const isLoaded = useSelector<ApiState>((state) => state.isLoading);
-  const isEdited = useSelector<ApiState>((state) => state.isEdited);
 
   const [isEditingUser, setIsEditingUser] = useState<Number | null>(null);
 
@@ -39,8 +39,15 @@ const App = () => {
     setIsEditingUser(id);
   };
 
-  const closeEditModal = ()=>{
+  const closeEditModal = () => {
     setIsEditingUser(null);
+  };
+
+  // Search Functionality
+  const [searchTerm, setsearchTerm] = useState("");
+
+  const getSearchTerm = (val:string) =>{
+    setsearchTerm(val)
   }
 
   if (!isLoaded) {
@@ -53,28 +60,43 @@ const App = () => {
     );
   } else {
     return (
-      <div className="App">
-        {users.length > 0 &&
-          users.map((item) => {
-            const { id } = item;
-            return (
-              <div className="App-container">
-                <UserCard
-                  key={id}
-                  user={item}
-                  deleteUser={() => handleDelete(id)}
-                  likeUser={() => handleLikeUser(id)}
-                  editUser={() => handleEdit(id)}
-                />
-              </div>
-            );
-          })}
-        <UserForm
-          visible={isEditingUser != null}
-          user={users.filter((user) => user.id == isEditingUser)[0]}
-          // onSubmitChange={(updatedUser) => {}
-         closeModal = {closeEditModal}
-        />
+      <div>
+        <p>
+          <SearchBar term={getSearchTerm} />
+        </p>
+        <div className="App">
+          {users.length > 0 &&
+            users
+              .filter((item) => {
+                if (searchTerm == "") {
+                  return item;
+                } else if (
+                  item.name.toLowerCase().includes(searchTerm.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .map((item) => {
+                const { id } = item;
+                return (
+                  <div className="App-container">
+                    <UserCard
+                      key={id}
+                      user={item}
+                      deleteUser={() => handleDelete(id)}
+                      likeUser={() => handleLikeUser(id)}
+                      editUser={() => handleEdit(id)}
+                    />
+                  </div>
+                );
+              })}
+          <UserFormModal
+            visible={isEditingUser != null}
+            user={users.filter((user) => user.id == isEditingUser)[0]}
+            // onSubmitChange={(updatedUser) => {}
+            closeModal={closeEditModal}
+          />
+        </div>
       </div>
     );
   }
