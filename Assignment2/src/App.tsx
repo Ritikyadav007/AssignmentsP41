@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import UserCard from "./Components/UserCard";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
-import { ApiState } from "./redux/reducers";
+import { ApiState, user } from "./redux/reducers";
 import UserFormModal from "./Components/UserFormModal";
 import SearchBar from "./Components/SearchBar";
+import UserForm from "./Components/UserForm";
 
 const App = () => {
   const users = useSelector<ApiState, ApiState["users"]>(
@@ -46,9 +47,21 @@ const App = () => {
   // Search Functionality
   const [searchTerm, setsearchTerm] = useState("");
 
-  const getSearchTerm = (val:string) =>{
-    setsearchTerm(val)
-  }
+  const getSearchTerm = (val: string) => {
+    setsearchTerm(val);
+  };
+  // updating the user
+
+  // const getUpdatedUser = (newUser: user) => {
+  //   const newUsers = users.filter((item) => {
+  //     if (item.id === newUser.id) {
+  //       return newUser;
+  //     } else {
+  //       return item;
+  //     }
+  //   });
+  //   dispatch({ type: "SET_DATA", payload: newUsers });
+  // };
 
   if (!isLoaded) {
     return (
@@ -61,9 +74,8 @@ const App = () => {
   } else {
     return (
       <div>
-        <p>
-          <SearchBar term={getSearchTerm} />
-        </p>
+        <SearchBar term={getSearchTerm} />
+
         <div className="App">
           {users.length > 0 &&
             users
@@ -92,10 +104,25 @@ const App = () => {
               })}
           <UserFormModal
             visible={isEditingUser != null}
-            user={users.filter((user) => user.id == isEditingUser)[0]}
-            // onSubmitChange={(updatedUser) => {}
+            // user={users.filter((user) => user.id == isEditingUser)[0]}
+            title="Edit User"
             closeModal={closeEditModal}
-          />
+          >
+            <UserForm
+              user={users.filter((user) => user.id == isEditingUser)[0]}
+              onSubmit={(updatedUser: user) => {
+                const updatedUsers = users.filter((item) => {
+                  if (item.id === updatedUser.id) {
+                    return updatedUser;
+                  } else {
+                    return item;
+                  }
+                });
+                dispatch({ type: "SET_DATA", payload: updatedUsers });
+                console.log(updatedUser);
+              }}
+            />
+          </UserFormModal>
         </div>
       </div>
     );

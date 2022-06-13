@@ -1,36 +1,26 @@
-import React, { ReactEventHandler, useState } from "react";
+import React, { ReactEventHandler, ReactNode } from "react";
 import { Modal } from "antd";
-import { type } from "@testing-library/user-event/dist/type";
 import "./UserForm.css";
-import { user } from "../redux/reducers";
-import UserForm from "./UserForm";
+import { title } from "process";
 
 type UserCardPropTypes = {
   visible: boolean;
-  user: user;
+  title: string;
+  children: ReactNode;
   closeModal: ReactEventHandler;
-  onSubmitChange: Function;
 };
 
 export default function UserFormModal(props: UserCardPropTypes) {
-  const { visible, user, closeModal, onSubmitChange } = props;
-  const [updatedUser, setUpdatedUser] = useState(user);
-
-  const getNewUser = (value: user) => {
-    setUpdatedUser(value);
-    console.log(value);
-  };
-
-  const validateForm = (values: any) => {};
+  const { visible, closeModal, children } = props;
 
   return visible ? (
     <Modal
-      title="Change User Details"
+      title={props.title}
       visible={visible}
-      onOk={onSubmitChange(updatedUser)}
+      onOk={closeModal}
       onCancel={closeModal}
     >
-      {<UserForm user={user} newUser={getNewUser} />}
+      {children}
     </Modal>
   ) : null;
 }
