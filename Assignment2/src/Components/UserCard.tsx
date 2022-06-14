@@ -81,6 +81,7 @@ const UserCard = (props: UserCardPropTypes) => {
 						<br />,
 						<GlobalOutlined />,
 						' ',
+						'http://',
 						website,
 					]}
 				/>

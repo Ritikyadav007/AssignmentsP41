@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { user } from "../redux/reducers";
-
+import { useForm } from 'react-hook-form'
 import { Form, Input, Button } from 'antd'
 
 type UserFormProps = {
@@ -11,10 +11,10 @@ type UserFormProps = {
 export default function UserForm(props: UserFormProps) {
 	let { name, phone, email, website, id } = props.user
 
-	// const {
-	//   register,
-	//   formState: { errors },
-	// } = useForm();
+	const {
+		register,
+		formState: { errors },
+	} = useForm()
 
 	const [userName, setName] = useState(name)
 	const [userEmail, setEmail] = useState(email)
@@ -69,6 +69,8 @@ export default function UserForm(props: UserFormProps) {
 					{
 						required: true,
 						message: 'Please input your email!',
+						pattern:
+							/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
 					},
 				]}
 			>
@@ -86,6 +88,7 @@ export default function UserForm(props: UserFormProps) {
 					{
 						required: true,
 						message: 'Please input your phone!',
+						max: 10,
 					},
 				]}
 			>
