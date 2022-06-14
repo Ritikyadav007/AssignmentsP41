@@ -73,60 +73,61 @@ const App = () => {
     );
   } else {
     return (
-      <div>
-        <SearchBar term={getSearchTerm} />
+					<div>
+						<SearchBar term={getSearchTerm} />
 
-        <div className="App">
-          {users.length > 0 &&
-            users
-              .filter((item) => {
-                if (searchTerm == "") {
-                  return item;
-                } else if (
-                  item.name.toLowerCase().includes(searchTerm.toLowerCase())
-                ) {
-                  return item;
-                }
-              })
-              .map((item) => {
-                const { id } = item;
-                return (
-                  <div className="App-container">
-                    <UserCard
-                      key={id}
-                      user={item}
-                      deleteUser={() => handleDelete(id)}
-
-                      likeUser={() => handleLikeUser(id)}
-                      editUser={() => handleEdit(id)}
-                    />
-                  </div>
-                );
-              })}
-          <UserFormModal
-            visible={isEditingUser != null}
-            // user={users.filter((user) => user.id == isEditingUser)[0]}
-            title="Edit User"
-            closeModal={closeEditModal}
-          >
-            <UserForm
-              user={users.filter((user) => user.id == isEditingUser)[0]}
-              onSubmit={(updatedUser: user) => {
-                const updatedUsers = users.filter((item) => {
-                  if (item.id === updatedUser.id) {
-                    return updatedUser;
-                  } else {
-                    return item;
-                  }
-                });
-                dispatch({ type: "SET_DATA", payload: updatedUsers });
-                console.log(updatedUser);
-              }}
-            />
-          </UserFormModal>
-        </div>
-      </div>
-    );
+						<div className='App'>
+							{users.length > 0 &&
+								users
+									.filter(item => {
+										if (searchTerm == '') {
+											return item
+										} else if (
+											item.name.toLowerCase().includes(searchTerm.toLowerCase())
+										) {
+											return item
+										}
+									})
+									.map(item => {
+										const { id } = item
+										return (
+											<div className='App-container'>
+												<UserCard
+													key={id}
+													user={item}
+													deleteUser={() => handleDelete(id)}
+													likeUser={() => handleLikeUser(id)}
+													editUser={() => handleEdit(id)}
+												/>
+											</div>
+										)
+									})}
+							<UserFormModal
+								visible={isEditingUser != null}
+								// user={users.filter((user) => user.id == isEditingUser)[0]}
+								title='Edit User'
+								closeModal={closeEditModal}
+								footer={null}
+							>
+								<UserForm
+									user={users.filter(user => user.id == isEditingUser)[0]}
+									onSubmit={(updatedUser: user) => {
+										const updatedUsers = users.map(item => {
+											if (item.id === updatedUser.id) {
+												return updatedUser
+											} else {
+												return item
+											}
+										})
+										dispatch({ type: 'SET_DATA', payload: updatedUsers })
+										closeEditModal()
+										console.log(updatedUser)
+									}}
+								/>
+							</UserFormModal>
+						</div>
+					</div>
+				)
   }
 };
 export default App;
