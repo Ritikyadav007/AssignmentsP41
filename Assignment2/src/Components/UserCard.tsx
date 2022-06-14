@@ -3,7 +3,7 @@ import { user } from "../redux/reducers";
 import 'antd/dist/antd.css';
 import { Card, Avatar, Popover, Col } from 'antd'
 import {
-	HeartTwoTone,
+	HeartOutlined,
 	DeleteFilled,
 	EditOutlined,
 	MailOutlined,
@@ -23,7 +23,7 @@ const { Meta } = Card
 
 const UserCard = (props: UserCardPropTypes) => {
 	const { username, email, phone, name, website, isLiked = false } = props.user
-	const HeartIcon = isLiked ? HeartFilled : HeartTwoTone
+	const HeartIcon = isLiked ? HeartFilled : HeartOutlined
 
 	return (
 		<Col xs={{ span: 6 }} lg={{ span: 6 }}>
@@ -35,17 +35,29 @@ const UserCard = (props: UserCardPropTypes) => {
 					<img
 						alt='example'
 						src={`https://avatars.dicebear.com/v2/avataaars/${username}.svg?options[mood][]=happy`}
-						style={{ height: '200px', width: '200px' }}
+						style={{
+							height: '200px',
+							width: '298px',
+							backgroundColor: 'rgb(250, 250, 250)',
+						}}
 					/>
 				}
 				actions={[
 					isLiked ? (
 						<Popover content={<p>Liked</p>}>
-							<HeartIcon key='like' onClick={props.likeUser} />
+							<HeartIcon
+								key='like'
+								onClick={props.likeUser}
+								style={{ color: 'red' }}
+							/>
 						</Popover>
 					) : (
 						<Popover content={<p>Like</p>}>
-							<HeartIcon key='like' onClick={props.likeUser} />
+							<HeartIcon
+								key='like'
+								onClick={props.likeUser}
+								style={{ color: 'red' }}
+							/>
 						</Popover>
 					),
 					<Popover content={<p>Edit</p>}>
