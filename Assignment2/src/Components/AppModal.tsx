@@ -1,9 +1,9 @@
-import React, { ReactEventHandler, ReactNode } from "react";
-import { Modal } from "antd";
-import "./UserForm.css";
-import { title } from "process";
+import React, { ReactEventHandler, ReactNode } from 'react'
+import { Modal } from 'antd'
+import './UserForm.css'
+import { title } from 'process'
 
-type UserCardPropTypes = {
+type AppModalPropTypes = {
 	visible: boolean
 	title: string
 	children: ReactNode
@@ -12,7 +12,7 @@ type UserCardPropTypes = {
 	footer?: ReactNode
 }
 
-export default function UserFormModal(props: UserCardPropTypes) {
+export default function AppModal(props: AppModalPropTypes) {
 	const { visible, closeModal, children, onOk, title, footer } = props
 	const handleOnOk = () => {
 		onOk && onOk()
