@@ -1,13 +1,8 @@
- .App {
-  display: grid;
-  padding : 30px;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 30px;
- }
+
  
- .App-container {
-  max-width: 282px;
-  max-height: 442px;
+.App-container {
+padding-top: 20px;
+  padding-bottom: 20px;
   
  
 } 

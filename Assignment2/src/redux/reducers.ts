@@ -1,21 +1,20 @@
 export type user = {
   id: number; // The user's id
-  username: string;
+  username?: string;
   name: string;
   email: string;
   phone: string;
   website: string;
-  address: {
+  address?: {
     street: string;
     suite: string;
     city: string;
     zipcode: string;
   };
-  company: {
+  company?: {
     name: string;
   };
   isLiked?: boolean;
-  
 };
 
 export type ApiState = {

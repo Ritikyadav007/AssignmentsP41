@@ -1,30 +1,125 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { user } from "../redux/reducers";
-import { Form, Input, Modal } from "antd";
+import { useForm } from 'react-hook-form'
+import { Form, Input, Button } from 'antd'
+
 type UserFormProps = {
-  user: user;
-};
+	user: user
+	onSubmit: Function
+}
 
 export default function UserForm(props: UserFormProps) {
-  const { name, phone, email, website } = props.user;
-  const [getName, setName] = useState(name);
-  const [getEmail, setEmail] = useState(email);
-  const [getPhone, setPhone] = useState(phone);
-  const [getWebsite, setWebsite] = useState(website);
-  console.log(props.user);
-  return (
-    <div>
-      <form >
-        <label>
-          Name:
-          <input
-            type="text"
-            value={getName}
-            onChange={(e)=>{setName(e.target.value)}}
-          />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    </div>
-  );
+	let { name, phone, email, website, id } = props.user
+
+	const {
+		register,
+		formState: { errors },
+	} = useForm()
+
+	const [userName, setName] = useState(name)
+	const [userEmail, setEmail] = useState(email)
+	const [userPhone, setPhone] = useState(phone)
+	const [userWebsite, setWebsite] = useState(website)
+
+	// useEffect(() => {
+	//   // componentWillUnmount
+	//   console.log("user did update");
+	//   return () => {
+	//     console.log("user form will unmount");
+	//   };
+	// }, []);
+
+	return (
+		<Form
+			name='basic'
+			labelCol={{
+				span: 8,
+			}}
+			wrapperCol={{
+				span: 16,
+			}}
+			onFinish={e => {
+				const newUser = { ...props.user, ...e }
+				props.onSubmit(newUser)
+			}}
+			autoComplete='off'
+		>
+			<Form.Item
+				label='Name'
+				name='name'
+				initialValue={userName}
+				rules={[
+					{
+						required: true,
+						message: 'Please input your name!',
+					},
+				]}
+			>
+				<Input
+					onChange={e => {
+						setName(e.target.value)
+					}}
+				/>
+			</Form.Item>
+			<Form.Item
+				label='Email'
+				name='email'
+				initialValue={userEmail}
+				rules={[
+					{
+						required: true,
+						message: 'Please input your email!',
+						pattern:
+							/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+					},
+				]}
+			>
+				<Input
+					onChange={e => {
+						setEmail(e.target.value)
+					}}
+				/>
+			</Form.Item>
+			<Form.Item
+				label='Phone'
+				name='phone'
+				initialValue={userPhone}
+				rules={[
+					{
+						required: true,
+						message: 'Please input your phone!',
+						max: 10,
+					},
+				]}
+			>
+				<Input
+					onChange={e => {
+						setPhone(e.target.value)
+					}}
+				/>
+			</Form.Item>
+			<Form.Item
+				label='Website'
+				name='website'
+				initialValue={userWebsite}
+				rules={[
+					{
+						required: true,
+						message: 'Please input your website!',
+					},
+				]}
+			>
+				<Input
+					onChange={e => {
+						setWebsite(e.target.value)
+					}}
+				/>
+			</Form.Item>
+			<Form.Item wrapperCol={{ offset: 10, span: 16 }}>
+				<Button type='primary' htmlType='submit'>
+					Submit
+				</Button>
+			</Form.Item>
+		</Form>
+	)
 }
