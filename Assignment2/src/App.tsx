@@ -3,9 +3,9 @@ import UserCard from "./Components/UserCard";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { ApiState, user } from "./redux/reducers";
-import UserFormModal from "./Components/UserFormModal";
-import SearchBar from "./Components/SearchBar";
-import UserForm from "./Components/UserForm";
+import AppModal from './Components/AppModal'
+import SearchBar from './Components/SearchBar'
+import UserForm from './Components/UserForm'
 import { Row } from 'antd'
 
 const App = () => {
@@ -102,7 +102,7 @@ const App = () => {
 										</div>
 									)
 								})}
-						<UserFormModal
+						<AppModal
 							visible={isEditingUser != null}
 							// user={users.filter((user) => user.id == isEditingUser)[0]}
 							title='Edit User'
@@ -124,7 +124,7 @@ const App = () => {
 									console.log(updatedUser)
 								}}
 							/>
-						</UserFormModal>
+						</AppModal>
 					</Row>
 				</div>
 			</div>

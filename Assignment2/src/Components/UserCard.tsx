@@ -32,15 +32,17 @@ const UserCard = (props: UserCardPropTypes) => {
 					width: 300,
 				}}
 				cover={
-					<img
-						alt='example'
-						src={`https://avatars.dicebear.com/v2/avataaars/${username}.svg?options[mood][]=happy`}
-						style={{
-							height: '200px',
-							width: '298px',
-							backgroundColor: 'rgb(250, 250, 250)',
-						}}
-					/>
+					<div>
+						<img
+							alt='example'
+							src={`https://avatars.dicebear.com/v2/avataaars/${username}.svg?options[mood][]=happy`}
+							style={{
+								height: '200px',
+								width: '298px',
+								backgroundColor: 'rgb(250, 250, 250)',
+							}}
+						/>
+					</div>
 				}
 				actions={[
 					isLiked ? (
