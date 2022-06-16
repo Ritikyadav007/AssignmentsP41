@@ -33,40 +33,40 @@ type Action = any;
 
 export const reducers = (state: ApiState = initialState, action: Action) => {
   switch (action.type) {
-    case "SET_DATA": {
-      return { ...state, users: action.payload };
-    }
-    case "SET_ISLOADING":{
-      return{ ...state, isLoading: action.payload};
-    }
-    case "DELETE_USER":
-      const updatedUsers = state.users.filter(
-        (userItem) => userItem.id !== action.payload
-      );
-      return { ...state, users: updatedUsers };
+		case 'SET_DATA': {
+			return {...state, users: action.payload};
+		}
+		case 'SET_ISLOADING': {
+			return {...state, isLoading: action.payload};
+		}
+		case 'DELETE_USER':
+			const updatedUsers = state.users.filter(
+				(userItem) => userItem.id !== action.payload
+			);
+			return {...state, users: updatedUsers};
 
-    case "EDIT_USER":
-      return { ...state, isEdited: action.payload };
+		case 'EDIT_USER':
+			return {...state, isEdited: action.payload};
 
-    case "LIKE_USER":
-      const updatedUsersAfterLike = state.users.map((item) =>
-        item.id !== action.payload
-          ? item
-          : { ...item, isLiked: item.isLiked ? !item.isLiked : true }
-      );
-      return { ...state, users: updatedUsersAfterLike };
-    //   state.users.map((item)=> {
-    //     if(item.id !== action.payload){
-    //         return item
-    //     }else if(item.isLiked){
-    //         return {...item, isLiked: !item.isLiked}
+		case 'LIKE_USER':
+			const updatedUsersAfterLike = state.users.map((item) =>
+				item.id !== action.payload
+					? item
+					: {...item, isLiked: item.isLiked ? !item.isLiked : true}
+			);
+			return {...state, users: updatedUsersAfterLike};
+		//   state.users.map((item)=> {
+		//     if(item.id !== action.payload){
+		//         return item
+		//     }else if(item.isLiked){
+		//         return {...item, isLiked: !item.isLiked}
 
-    //   }else{
-    //       return {...item, isLiked: true}
-    //   }
-    // })
+		//   }else{
+		//       return {...item, isLiked: true}
+		//   }
+		// })
 
-    default:
-      return state;
-  }
+		default:
+			return state;
+	}
 };
