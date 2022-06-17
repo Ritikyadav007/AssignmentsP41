@@ -36,6 +36,7 @@ const UserCard = (props: UserCardPropTypes) => {
 	const Cardstyle = props.theme == 'light' ? LightCardstyle : DarkCardstyle;
 	const iconColor = props.theme == 'light' ? 'black' : 'white';
 	const cardColor = props.theme == 'light' ? 'white' : '#404040';
+  const cover = props.theme == 'light' ? '#fafafa' : '#bdbdbd';
 
 	return (
 		<Col xs={{span: 6}} lg={{span: 6}}>
@@ -50,7 +51,7 @@ const UserCard = (props: UserCardPropTypes) => {
 							display: 'flex',
 							justifyContent: 'center',
 							alignItems: 'center',
-							backgroundColor: 'rgb(250, 250, 250)',
+							backgroundColor: cover,
 						}}
 					>
 						<img
@@ -59,7 +60,7 @@ const UserCard = (props: UserCardPropTypes) => {
 							style={{
 								height: '200px',
 								width: '200px',
-								backgroundColor: 'rgb(250, 250, 250)',
+								backgroundColor: cover,
 							}}
 						/>
 					</div>
