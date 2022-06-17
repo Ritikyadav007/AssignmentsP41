@@ -18,21 +18,21 @@ export type user = {
 };
 
 export type ApiState = {
-  users: Array<user>;
-  isLoading: boolean;
-  isEdited?: boolean;
+	users: Array<user>;
+	isLoading: boolean;
+	isEdited?: boolean;
 };
 
 const initialState = {
-  users: [],
-  isLoading : false,
-  isEdited: false,
+	users: [],
+	isLoading: false,
+	isEdited: false,
 };
 
 type Action = any;
 
 export const reducers = (state: ApiState = initialState, action: Action) => {
-  switch (action.type) {
+	switch (action.type) {
 		case 'SET_DATA': {
 			return {...state, users: action.payload};
 		}
