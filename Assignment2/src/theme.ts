@@ -10,11 +10,11 @@ export const DarkNavbarStyle = styled.div`
 	color: white;
 `;
 
-export const LightAppStyle = styled.div`
+export const LightAppStyle = styled.body`
 	background: white;
 `;
 
-export const DarkAppStyle = styled.div`
+export const DarkAppStyle = styled.body`
 	background: #282828;
 `;
 

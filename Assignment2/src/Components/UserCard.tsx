@@ -1,7 +1,7 @@
 import React, { ReactEventHandler } from "react";
 import { user } from "../redux/reducers";
 import 'antd/dist/antd.css';
-import { Card, Avatar, Popover, Col, Tooltip } from "antd";
+import { Card, Col, Tooltip } from "antd";
 import {
 	HeartOutlined,
 	DeleteFilled,
@@ -11,7 +11,6 @@ import {
 	GlobalOutlined,
 	HeartFilled,
 } from '@ant-design/icons'
-import styled from 'styled-components';
 import {DarkCardstyle, LightCardstyle} from '../theme';
 
 type UserCardPropTypes = {
@@ -22,13 +21,7 @@ type UserCardPropTypes = {
 	theme: string;
 };
 
-const {Meta} = Card;
-const Cardstyle = styled.div`
-	display: inline;
-	color: white;
-	width: 390;
-`;
-
+const { Meta } = Card;
 const UserCard = (props: UserCardPropTypes) => {
 	const {username, email, phone, name, website, isLiked = false} = props.user;
 	const HeartIcon = isLiked ? HeartFilled : HeartOutlined;
