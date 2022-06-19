@@ -90,6 +90,7 @@ export default function HomeScreen(props: HomeScreenProps) {
                     term={getSearchTerm}
                     isClicked={getTheme}
                     theme={theme}
+                    sortType={getSortType}
                 />
 
                 <div className='App'>
