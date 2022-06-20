@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { user } from "../redux/reducers";
+import { user } from "../../store/reducers";
 import { useForm } from 'react-hook-form'
 import { Form, Input, Button } from 'antd'
 

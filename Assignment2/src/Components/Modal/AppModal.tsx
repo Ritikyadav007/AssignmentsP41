@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import { Modal } from 'antd'
-import './UserForm.css'
+
 
 
 type AppModalPropTypes = {

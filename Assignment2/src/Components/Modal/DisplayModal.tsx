@@ -1,8 +1,8 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { user } from '../redux/reducers';
+import { user } from '../../store/reducers';
 import AppModal from './AppModal';
-import UserForm from './UserForm';
+import UserForm from '../UserForm/UserForm';
 
 type DisplayModalProps = {
     users: user[];

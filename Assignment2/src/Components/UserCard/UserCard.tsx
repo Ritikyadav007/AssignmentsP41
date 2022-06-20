@@ -1,5 +1,5 @@
 import React, { ReactEventHandler } from "react";
-import { user } from "../redux/reducers";
+import { user } from "../../store/reducers";
 import 'antd/dist/antd.css';
 import { Card, Col, Tooltip } from "antd";
 import {
@@ -11,7 +11,7 @@ import {
 	GlobalOutlined,
 	HeartFilled,
 } from '@ant-design/icons'
-import {DarkCardstyle, LightCardstyle} from '../theme';
+import { DarkCardstyle, LightCardstyle } from '../../theme';
 
 type UserCardPropTypes = {
 	user: user;
@@ -23,7 +23,7 @@ type UserCardPropTypes = {
 
 const { Meta } = Card;
 const UserCard = (props: UserCardPropTypes) => {
-	const {username, email, phone, name, website, isLiked = false} = props.user;
+	const { username, email, phone, name, website, isLiked = false } = props.user;
 	const HeartIcon = isLiked ? HeartFilled : HeartOutlined;
 
 	const Cardstyle = props.theme == 'light' ? LightCardstyle : DarkCardstyle;
@@ -31,7 +31,7 @@ const UserCard = (props: UserCardPropTypes) => {
 	const cardColor = props.theme == 'light' ? 'white' : '#404040';
 
 	return (
-		<Col xs={{span: 6}} lg={{span: 6}}>
+		<Col xs={{ span: 6 }} lg={{ span: 6 }}>
 			<Card
 				style={{
 					width: 300,
@@ -63,7 +63,7 @@ const UserCard = (props: UserCardPropTypes) => {
 							<HeartIcon
 								key='like'
 								onClick={props.likeUser}
-								style={{color: 'red'}}
+								style={{ color: 'red', backgroundColor: 'red' }}
 							/>
 						</Tooltip>
 					) : (
@@ -71,7 +71,7 @@ const UserCard = (props: UserCardPropTypes) => {
 							<HeartIcon
 								key='like'
 								onClick={props.likeUser}
-								style={{color: 'red'}}
+								style={{ color: 'red' }}
 							/>
 						</Tooltip>
 					),
@@ -86,15 +86,15 @@ const UserCard = (props: UserCardPropTypes) => {
 				<Meta
 					title={<Cardstyle>{name}</Cardstyle>}
 					description={[
-						<MailOutlined style={{color: iconColor}} />,
+						<MailOutlined style={{ color: iconColor }} />,
 						' ',
 						<Cardstyle>{email}</Cardstyle>,
 						<br />,
-						<PhoneOutlined style={{color: iconColor}} />,
+						<PhoneOutlined style={{ color: iconColor }} />,
 						' ',
 						<Cardstyle>{phone}</Cardstyle>,
 						<br />,
-						<GlobalOutlined style={{color: iconColor}} />,
+						<GlobalOutlined style={{ color: iconColor }} />,
 						' ',
 						<Cardstyle>
 							http://
