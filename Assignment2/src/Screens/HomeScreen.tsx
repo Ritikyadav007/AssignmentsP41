@@ -1,7 +1,7 @@
 import { Row } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { user } from '../store/reducers';
+import { useDispatch, useSelector } from 'react-redux';
+import { ApiState, user } from '../store/reducers';
 import { DarkAppStyle, LightAppStyle } from '../theme';
 import DisplayModal from '../Components/Modal/DisplayModal';
 import NavBar from '../Components/Header/NavBar';
@@ -9,23 +9,38 @@ import { } from '../theme';
 import Header from '../Components/Header/Index';
 import SortMenu from '../Components/Header/SortMenu';
 import UserCard from '../Components/UserCard/UserCard';
+import Loader from '../Components/Loader/Loader';
 
 const sortTypes: string[] = ['name', 'phone'];
 
-type HomeScreenProps = {
-    users: Array<user>;
-};
+// type HomeScreenProps = {
+//     users: Array<user>;
+// };
 
-export default function HomeScreen(props: HomeScreenProps) {
-    const { users, ...others } = props;
-
+export default function HomeScreen() {
     const [theme, setTheme] = useState('light');
     // Search Functionality
     const [searchTerm, setsearchTerm] = useState<string>('');
 
     const [sortingType, setSortingType] = useState<string>(sortTypes[0]);
-    console.log(sortingType)
+    console.log(sortingType);
     const [isAcc, setIsAcc] = useState<Boolean>(true);
+
+    const users = useSelector<ApiState, ApiState['users']>(
+        (state) => state.users
+    );
+    const isLoaded = useSelector<ApiState>((state) => state.isLoading);
+    const dispatch = useDispatch();
+    const getUsers = async () => {
+        const response = await fetch('https://jsonplaceholder.typicode.com/users');
+        const users = await response.json();
+        dispatch({ type: 'SET_DATA', payload: users });
+        dispatch({ type: 'SET_ISLOADING', payload: true });
+    };
+
+    useEffect(() => {
+        getUsers();
+    }, []);
 
     const getTheme = (val: boolean) => {
         if (val) {
@@ -36,8 +51,6 @@ export default function HomeScreen(props: HomeScreenProps) {
     const AppTheme = theme == 'light' ? LightAppStyle : DarkAppStyle;
 
     const [isEditingUser, setIsEditingUser] = useState<Number | null>(null);
-
-    const dispatch = useDispatch();
 
     const handleLikeUser = (id: number) => {
         dispatch({ type: 'LIKE_USER', payload: id });
@@ -57,8 +70,7 @@ export default function HomeScreen(props: HomeScreenProps) {
 
     const displayUserCard = () => { };
 
-
-    const getUsers = () => {
+    const getSortedUsers = () => {
         const filteredUsers: user[] =
             searchTerm === ''
                 ? users
@@ -81,29 +93,28 @@ export default function HomeScreen(props: HomeScreenProps) {
         }
     };
 
-    const getSortingType = (val: string) => {
-        setSortingType(val)
-        console.log(sortingType)
-    }
 
-
-    return (
+    return !isLoaded ? (
+        <Loader />
+    ) : (
         <AppTheme>
             <div>
                 <Header
                     setSearchTerm={(newSearchTerm: string) => {
                         setsearchTerm(newSearchTerm);
                     }}
-                    setSortType={(val: string) => { setSortingType(val) }}
-                    theme={theme}
-                    isThemeChange={getTheme}
-                // isAcensending={true}
-                // setSortingDirection={()=> {}}
-                />
+                        setSortType={(val: string) => {
+                            setSortingType(val);
+                        }}
+                        theme={theme}
+                        isThemeChange={getTheme}
+                    // isAcensending={true}
+                    // setSortingDirection={()=> {}}
+                    />
 
-                <div className='App'>
-                    <Row justify='space-around'>
-                        {getUsers().map((item) => {
+                    <div className='App'>
+                        <Row justify='space-around'>
+                            {getSortedUsers().map((item) => {
                             const { id } = item;
                             return (
                                 <div className='App-container'>
