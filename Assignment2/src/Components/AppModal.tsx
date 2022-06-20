@@ -1,7 +1,7 @@
-import React, { ReactEventHandler, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 import { Modal } from 'antd'
 import './UserForm.css'
-import { title } from 'process'
+
 
 type AppModalPropTypes = {
 	visible: boolean
