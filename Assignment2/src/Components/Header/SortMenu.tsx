@@ -1,5 +1,4 @@
 import { Button, Dropdown, Menu, Space } from 'antd'
-import DownOutlined from '@ant-design/icons';
 import React from 'react'
 
 type SortMenuProps = {
@@ -15,25 +14,15 @@ export default function SortMenu(props: SortMenuProps) {
                 {
                     key: '1',
                     label: (
-                        <span onClick={selectedSortType('NameAsc')}>Name -- Asc</span>
+                        <span onClick={() => selectedSortType('name')}>Name</span>
                     ),
                 },
                 {
                     key: '2',
                     label: (
-                        <span onClick={selectedSortType('NameDsc')}>Name -- Dsc</span>
+                        <span onClick={() => selectedSortType('phone')}>Phone</span>
                     ),
-                },
-                {
-                    key: '3',
-                    label: (
-                        <span onClick={selectedSortType('PhoneAsc')}>Phone -- Asc</span>
-                    ),
-                },
-                {
-                    key: '4',
-                    label: (<span onClick={selectedSortType('PhoneDsc')}>Phone -- Dsc</span>),
-                },
+                }
             ]}
         />
     );

@@ -1,21 +1,20 @@
 import { Row } from 'antd';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { user } from '../store/reducers';
 import { DarkAppStyle, LightAppStyle } from '../theme';
 import DisplayModal from '../Components/Modal/DisplayModal';
 import NavBar from '../Components/Header/NavBar';
-import {} from '../theme'
-import Header from '../Components/Header';
+import { } from '../theme';
+import Header from '../Components/Header/Index';
 import SortMenu from '../Components/Header/SortMenu';
 import UserCard from '../Components/UserCard/UserCard';
 
-
-const sortTypes: string[] = ["name", "phone"]
+const sortTypes: string[] = ['name', 'phone'];
 
 type HomeScreenProps = {
-    users: Array<user>
-}
+    users: Array<user>;
+};
 
 export default function HomeScreen(props: HomeScreenProps) {
     const { users, ...others } = props;
@@ -25,29 +24,20 @@ export default function HomeScreen(props: HomeScreenProps) {
     const [searchTerm, setsearchTerm] = useState<string>('');
 
     const [sortingType, setSortingType] = useState<string>(sortTypes[0]);
-    const [isAcc, setIsAcc] = useState<Boolean>(true)
+    console.log(sortingType)
+    const [isAcc, setIsAcc] = useState<Boolean>(true);
 
-
-    
     const getTheme = (val: boolean) => {
         if (val) {
             theme == 'light' ? setTheme('dark') : setTheme('light');
         }
     };
 
+    const AppTheme = theme == 'light' ? LightAppStyle : DarkAppStyle;
 
-    const AppTheme =
-        theme == 'light' ? LightAppStyle : DarkAppStyle;
-
-
-    const [
-        isEditingUser,
-        setIsEditingUser,
-    ] = useState<Number | null>(null);
+    const [isEditingUser, setIsEditingUser] = useState<Number | null>(null);
 
     const dispatch = useDispatch();
-
-
 
     const handleLikeUser = (id: number) => {
         dispatch({ type: 'LIKE_USER', payload: id });
@@ -65,69 +55,35 @@ export default function HomeScreen(props: HomeScreenProps) {
         setIsEditingUser(null);
     };
 
-    
-
-    const displayUserCard = () => {
-
-    }
-
-
-    // Sorting Funtionality
-    const getSelectedSortType = () => {
-        setSortingType(sortTypes[1]);
-    };
-    console.log(sortingType);
-
-    useEffect(() => {
-        const sortArray = (type: string) => {
-
-            switch (type) {
-                case 'id':
-                    dispatch({ type: 'SET_DATA', payload: [...users].sort((a, b) => (a.id) - (b.id)) })
-                    break;
-                case 'NameAsc':
-                    const sorted = users.sort((a, b) => a.name.localeCompare(b.name))
-                    console.log(sorted);
-                    dispatch({ type: 'SET_DATA', payload: sorted })
-                    break;
-                case 'NameDsc':
-                    dispatch({ type: 'SET_DATA', payload: [...users].sort((a, b) => (-1) * a.name.localeCompare(b.name)) })
-                    break;
-                case 'PhoneAsc':
-                    dispatch({ type: 'SET_DATA', payload: [...users].sort((a, b) => a.phone.localeCompare(b.phone)) })
-                    break;
-                case 'PhoneDsc':
-                    dispatch({ type: 'SET_DATA', payload: [...users].sort((a, b) => (-1) * a.phone.localeCompare(b.phone)) })
-                    break;
-                default:
-                    break;
-            }
-
-            // const sortProperty = types[type];
-            // const sorted = users.sort((a, b) => (a.name) - (b.name));
-
-        };
-
-        sortArray(sortingType);
-    }, [sortingType])
-
+    const displayUserCard = () => { };
 
 
     const getUsers = () => {
-        const filteredUsers: user[] = searchTerm === '' ? users : users.filter(thisUser => {
-            const {name} = thisUser;
-            return name.toLowerCase().includes(searchTerm)
-        });
+        const filteredUsers: user[] =
+            searchTerm === ''
+                ? users
+                : users.filter((thisUser) => {
+                    const { name } = thisUser;
+                    return name.toLowerCase().includes(searchTerm);
+                });
 
-       
-        switch(sortingType) {
+        switch (sortingType) {
             // case sortTypes[0]:
-                // return filteredUsers.sort((aUser, bUser)=> aUser.name.localeCompare(bUser.name))
+            // return filteredUsers.sort((aUser, bUser)=> aUser.name.localeCompare(bUser.name))
             case sortTypes[1]:
-                return filteredUsers.sort((aUser, bUser)=> aUser.phone.localeCompare(bUser.phone));
+                return filteredUsers.sort((aUser, bUser) =>
+                    aUser.phone.localeCompare(bUser.phone)
+                );
             default:
-                return filteredUsers.sort((aUser, bUser)=> aUser.name.localeCompare(bUser.name))
+                return filteredUsers.sort((aUser, bUser) =>
+                    aUser.name.localeCompare(bUser.name)
+                );
         }
+    };
+
+    const getSortingType = (val: string) => {
+        setSortingType(val)
+        console.log(sortingType)
     }
 
 
@@ -135,19 +91,18 @@ export default function HomeScreen(props: HomeScreenProps) {
         <AppTheme>
             <div>
                 <Header
-                    searchTerm={searchTerm} 
-                    setSearchTerm={(newSearchTerm)=> setsearchTerm(newSearchTerm))}
-                    sortTypes={sortTypes}
-                    selectedSortType={sortingType} 
-                    setSortType={(newSortType)=> setSortingType(newSortType)}
-                    isAcensending={true}
-                    setSortingDirection={()=> {}} 
+                    setSearchTerm={(newSearchTerm: string) => {
+                        setsearchTerm(newSearchTerm);
+                    }}
+                    setSortType={(val: string) => { setSortingType(val) }}
+                    theme={theme}
+                    isThemeChange={getTheme}
+                // isAcensending={true}
+                // setSortingDirection={()=> {}}
                 />
-                
-                <div className='App'>
 
+                <div className='App'>
                     <Row justify='space-around'>
-                        isloading? <Loader/>
                         {getUsers().map((item) => {
                             const { id } = item;
                             return (
@@ -162,14 +117,15 @@ export default function HomeScreen(props: HomeScreenProps) {
                                     />
                                 </div>
                             );
-                        })
-                        }
-                        <DisplayModal editedUser={isEditingUser} users={users} CloseModal={closeEditModal} />
+                        })}
+                        <DisplayModal
+                            editedUser={isEditingUser}
+                            users={users}
+                            CloseModal={closeEditModal}
+                        />
                     </Row>
                 </div>
             </div>
         </AppTheme>
-    )
-
-
+    );
 }

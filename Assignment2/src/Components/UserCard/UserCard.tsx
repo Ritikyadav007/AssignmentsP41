@@ -63,7 +63,7 @@ const UserCard = (props: UserCardPropTypes) => {
 							<HeartIcon
 								key='like'
 								onClick={props.likeUser}
-								style={{ color: 'red', backgroundColor: 'red' }}
+								style={{ color: 'red' }}
 							/>
 						</Tooltip>
 					) : (
