@@ -1,48 +1,18 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import Brightness2OutlinedIcon from '@mui/icons-material/Brightness2Outlined';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import {DarkNavbarStyle, LightNavbarStyle} from '../theme';
-import { Button, Dropdown, Menu } from 'antd';
+import { DarkNavbarStyle, LightNavbarStyle } from '../../theme';
 
-type SearchBarProps = {
+
+type NavBarProps = {
 	term: Function;
 	isClicked: Function;
 	theme: string;
-	sortType: Function;
+	children: ReactNode;
 };
 
-export default function(props: SearchBarProps) {
-	const menu = (
-		<Menu
-			items={[
-				{
-					key: '1',
-					label: (
-						<span
-							onClick={() => {
-								props.sortType('name');
-							}}
-						>
-							Name
-						</span>
-					),
-				},
-				{
-					key: '2',
-					label: (
-						<span
-							onClick={() => {
-								props.sortType('phone');
-							}}
-						>
-							Phone No.
-						</span>
-					),
-				},
-			]}
-		/>
-	);
-	const {term, isClicked, theme} = props;
+export default function NavBar(props: NavBarProps) {
+	const { term, isClicked, theme, children } = props;
 	const ThemeButton =
 		theme == 'light' ? Brightness2OutlinedIcon : Brightness7Icon;
 
@@ -53,11 +23,7 @@ export default function(props: SearchBarProps) {
 				<nav className='navbar '>
 					<div className='container-fluid'>
 						<span className='navbar-brand'>UserCart</span>
-						<div>
-							<Dropdown overlay={menu} placement='bottom'>
-								<Button>Sort By</Button>
-							</Dropdown>
-						</div>
+						{children}
 						<form className='d-flex'>
 							<input
 								className='form-control me-2'

@@ -1,11 +1,12 @@
 import { Row } from 'antd';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { user } from '../redux/reducers';
+import { user } from '../store/reducers';
 import { DarkAppStyle, LightAppStyle } from '../theme';
-import DisplayModal from './DisplayModal';
-import SearchBar from './SearchBar';
-import UserCard from './UserCard';
+import DisplayModal from '../Components/Modal/DisplayModal';
+import NavBar from '../Components/Header/NavBar';
+import SortMenu from '../Components/Header/SortMenu';
+import UserCard from '../Components/UserCard/UserCard';
 
 
 
@@ -14,13 +15,15 @@ type HomeScreenProps = {
 }
 
 export default function HomeScreen(props: HomeScreenProps) {
-    const { users } = props;
+    const { users, ...others } = props;
+
     const [theme, setTheme] = useState('light');
     const getTheme = (val: boolean) => {
         if (val) {
             theme == 'light' ? setTheme('dark') : setTheme('light');
         }
     };
+
 
     const AppTheme =
         theme == 'light' ? LightAppStyle : DarkAppStyle;
@@ -79,20 +82,55 @@ export default function HomeScreen(props: HomeScreenProps) {
 
 
     // Sorting Funtionality
-    const [sortingType, setSortingType] = useState('id');
-    const getSortType = (val: string) => {
+    const [sortingType, setSortingType] = useState('NameAsc');
+    const getSelectedSortType = (val: string) => {
         setSortingType(val);
     };
+    console.log(sortingType);
+
+    useEffect(() => {
+        const sortArray = (type: string) => {
+
+            switch (type) {
+                case 'id':
+                    dispatch({ type: 'SET_DATA', payload: [...users].sort((a, b) => (a.id) - (b.id)) })
+                    break;
+                case 'NameAsc':
+                    const sorted = users.sort((a, b) => a.name.localeCompare(b.name))
+                    console.log(sorted);
+                    dispatch({ type: 'SET_DATA', payload: sorted })
+                    break;
+                case 'NameDsc':
+                    dispatch({ type: 'SET_DATA', payload: [...users].sort((a, b) => (-1) * a.name.localeCompare(b.name)) })
+                    break;
+                case 'PhoneAsc':
+                    dispatch({ type: 'SET_DATA', payload: [...users].sort((a, b) => a.phone.localeCompare(b.phone)) })
+                    break;
+                case 'PhoneDsc':
+                    dispatch({ type: 'SET_DATA', payload: [...users].sort((a, b) => (-1) * a.phone.localeCompare(b.phone)) })
+                    break;
+                default:
+                    break;
+            }
+
+            // const sortProperty = types[type];
+            // const sorted = users.sort((a, b) => (a.name) - (b.name));
+
+        };
+
+        sortArray(sortingType);
+    }, [sortingType])
+
+
     return (
         <AppTheme>
             <div>
-                <SearchBar
+                <NavBar
                     term={getSearchTerm}
                     isClicked={getTheme}
                     theme={theme}
-                    sortType={getSortType}
-                />
-
+                ><SortMenu selectedSortType={getSelectedSortType} />
+                </NavBar>
                 <div className='App'>
                     <Row justify='space-around'>
                         {getSearchedUsers(users).map((item) => {

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
-import { ApiState } from './redux/reducers';
-import Loader from './Components/Loader';
-import HomeScreen from './Components/HomeScreen';
+import { ApiState } from './store/reducers';
+import Loader from './Components/Loader/Loader';
+import HomeScreen from './Screens/HomeScreen';
 
 const App = () => {
 	const users = useSelector<ApiState, ApiState['users']>(
