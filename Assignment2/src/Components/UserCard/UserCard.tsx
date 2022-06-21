@@ -1,4 +1,4 @@
-import React, { ReactEventHandler } from "react";
+import React, { ReactEventHandler, useContext } from "react";
 import { user } from "../../store/reducers";
 import 'antd/dist/antd.css';
 import { Card, Col, Tooltip } from "antd";
@@ -12,13 +12,15 @@ import {
 	HeartFilled,
 } from '@ant-design/icons'
 import { DarkCardstyle, LightCardstyle } from '../../theme';
+import './UserCard.css'
+import { ThemeContext } from "../../themeStore";
+
 
 type UserCardPropTypes = {
 	user: user;
 	deleteUser: ReactEventHandler;
 	likeUser: ReactEventHandler;
 	editUser: ReactEventHandler;
-	theme: string;
 };
 
 const { Meta } = Card;
@@ -26,34 +28,23 @@ const UserCard = (props: UserCardPropTypes) => {
 	const { username, email, phone, name, website, isLiked = false } = props.user;
 	const HeartIcon = isLiked ? HeartFilled : HeartOutlined;
 
-	const Cardstyle = props.theme == 'light' ? LightCardstyle : DarkCardstyle;
-	const iconColor = props.theme == 'light' ? 'black' : 'white';
-	const cardColor = props.theme == 'light' ? 'white' : '#404040';
+	const themeMode = useContext(ThemeContext);
+	console.log(themeMode);
+
+	// const Cardstyle = props.theme == 'light' ? LightCardstyle : DarkCardstyle;
+	// const iconColor = props.theme == 'light' ? 'black' : 'white';
+	// const cardColor = props.theme == 'light' ? 'white' : '#404040';
 
 	return (
 		<Col xs={{ span: 6 }} lg={{ span: 6 }}>
 			<Card
-				style={{
-					width: 300,
-					background: cardColor,
-				}}
+				className="card"
+				id={themeMode}
 				cover={
-					<div
-						style={{
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center',
-							backgroundColor: 'rgb(250, 250, 250)',
-						}}
-					>
-						<img
+					<div className="image-wrapper" id={themeMode}>
+						<img className="image" id={themeMode}
 							alt='example'
 							src={`https://avatars.dicebear.com/v2/avataaars/${username}.svg?options[mood][]=happy`}
-							style={{
-								height: '200px',
-								width: '200px',
-								backgroundColor: 'rgb(250, 250, 250)',
-							}}
 						/>
 					</div>
 				}
@@ -84,22 +75,22 @@ const UserCard = (props: UserCardPropTypes) => {
 				]}
 			>
 				<Meta
-					title={<Cardstyle>{name}</Cardstyle>}
+					title={<div className="text" id={themeMode}>{name}</div>}
 					description={[
-						<MailOutlined style={{ color: iconColor }} />,
+						<MailOutlined className="icons" id={themeMode} />,
 						' ',
-						<Cardstyle>{email}</Cardstyle>,
+						<div className="text" id={themeMode} >{email}</div>,
 						<br />,
-						<PhoneOutlined style={{ color: iconColor }} />,
+						<PhoneOutlined className="icons" id={themeMode} />,
 						' ',
-						<Cardstyle>{phone}</Cardstyle>,
+						<div className="text" id={themeMode} >{phone}</div>,
 						<br />,
-						<GlobalOutlined style={{ color: iconColor }} />,
+						<GlobalOutlined className="icons" id={themeMode} />,
 						' ',
-						<Cardstyle>
+						<div className="text" id={themeMode}>
 							http://
 							{website}
-						</Cardstyle>,
+						</div>,
 					]}
 				/>
 			</Card>
