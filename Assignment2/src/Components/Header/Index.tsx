@@ -7,16 +7,17 @@ type HeaderProps = {
     isThemeChange: Function;
     setSortType: Function;
     theme: string;
+    sortType: string[];
 }
 
 export default function Header(props: HeaderProps) {
-    const { setSearchTerm, isThemeChange, setSortType, theme } = props;
+    const { setSearchTerm, isThemeChange, setSortType, theme, sortType } = props;
     return (
         <NavBar
             term={setSearchTerm}
             isClicked={isThemeChange}
             theme={theme}
-        ><SortMenu selectedSortType={setSortType} />
+        ><SortMenu selectedSortType={setSortType} sortTypes={sortType} />
         </NavBar>
     )
 }

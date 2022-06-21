@@ -106,6 +106,7 @@ export default function HomeScreen() {
                         setSortType={(val: string) => {
                             setSortingType(val);
                         }}
+                        sortType={sortTypes}
                         theme={theme}
                         isThemeChange={getTheme}
                     // isAcensending={true}
