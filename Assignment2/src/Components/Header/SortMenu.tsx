@@ -1,4 +1,4 @@
-import { Button, Dropdown, Menu, Space } from 'antd'
+import { Button, Cascader, Dropdown, Menu, Space } from 'antd'
 import React from 'react'
 
 type SortMenuItems = {
@@ -9,21 +9,12 @@ type SortMenuItems = {
 
 export default function SortMenu(props: SortMenuItems) {
     const { selectedSortType, sortTypes } = props;
-    const menuItems = sortTypes.map((type, index) => {
-        const obj = { key: index + 1, label: (<span onClick={() => selectedSortType(type)}>{type.toUpperCase()}</span>) }
-        return obj
-    })
-
-    console.log(menuItems);
-    const menu = (
-        <Menu
-            items={menuItems}
-        />
-    );
+    const options = sortTypes.map((type) => { return { value: type, label: type.toUpperCase() } })
     return (
-        <Dropdown overlay={menu} placement="bottom">
-            <Button><b>Sort By</b></Button>
-        </Dropdown>
+        <div>
+            <span>SortBy: </span>
+            <Cascader defaultValue={[sortTypes[0]]} options={options} onChange={(e) => e === undefined ? selectedSortType(sortTypes[0]) : selectedSortType(e[0])} placeholder="Please select" />
+        </div>
     )
 }
 
