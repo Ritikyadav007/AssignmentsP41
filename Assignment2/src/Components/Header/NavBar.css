@@ -1,0 +1,9 @@
+#dark .nav-wrapper {
+    background: grey;
+    color: white;
+}
+
+#light .nav-wrapper {
+    background: #e6e6e6;
+    color: black;
+}
