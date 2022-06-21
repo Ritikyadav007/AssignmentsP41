@@ -1,40 +1,23 @@
 import { Button, Dropdown, Menu, Space } from 'antd'
-import DownOutlined from '@ant-design/icons';
 import React from 'react'
 
-type SortMenuProps = {
+type SortMenuItems = {
     selectedSortType: Function;
+    sortTypes: string[];
 }
 
 
-export default function SortMenu(props: SortMenuProps) {
-    const { selectedSortType } = props;
+export default function SortMenu(props: SortMenuItems) {
+    const { selectedSortType, sortTypes } = props;
+    const menuItems = sortTypes.map((type, index) => {
+        const obj = { key: index + 1, label: (<span onClick={() => selectedSortType(type)}>{type.toUpperCase()}</span>) }
+        return obj
+    })
+
+    console.log(menuItems);
     const menu = (
         <Menu
-            items={[
-                {
-                    key: '1',
-                    label: (
-                        <span onClick={selectedSortType('NameAsc')}>Name -- Asc</span>
-                    ),
-                },
-                {
-                    key: '2',
-                    label: (
-                        <span onClick={selectedSortType('NameDsc')}>Name -- Dsc</span>
-                    ),
-                },
-                {
-                    key: '3',
-                    label: (
-                        <span onClick={selectedSortType('PhoneAsc')}>Phone -- Asc</span>
-                    ),
-                },
-                {
-                    key: '4',
-                    label: (<span onClick={selectedSortType('PhoneDsc')}>Phone -- Dsc</span>),
-                },
-            ]}
+            items={menuItems}
         />
     );
     return (
