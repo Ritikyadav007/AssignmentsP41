@@ -24,7 +24,7 @@ export default function HomeScreen() {
 
     const [sortingType, setSortingType] = useState<string>(sortTypes[0]);
     console.log(sortingType);
-    const [isAcc, setIsAcc] = useState<Boolean>(true);
+    const [sortOrder, setSortOrder] = useState<string>('ASC');
 
     const users = useSelector<ApiState, ApiState['users']>(
         (state) => state.users
@@ -93,6 +93,12 @@ export default function HomeScreen() {
         }
     };
 
+    const setSortingDirection = (val: boolean) => {
+        if (val) {
+            sortOrder === 'ASC' ? setSortOrder('DSC') : setSortOrder('ASC')
+        }
+    }
+
 
     return !isLoaded ? (
         <Loader />
@@ -109,13 +115,13 @@ export default function HomeScreen() {
                         sortType={sortTypes}
                         theme={theme}
                         isThemeChange={getTheme}
-                    // isAcensending={true}
-                    // setSortingDirection={()=> {}}
+                        sortDirection={sortOrder}
+                        setSortDirection={setSortingDirection}
                     />
 
                     <div className='App'>
                         <Row justify='space-around'>
-                            {getSortedUsers().map((item) => {
+                            {(sortOrder === 'ASC' ? getSortedUsers() : getSortedUsers().reverse()).map((item) => {
                             const { id } = item;
                             return (
                                 <div className='App-container'>
