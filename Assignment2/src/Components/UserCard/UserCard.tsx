@@ -54,7 +54,7 @@ const UserCard = (props: UserCardPropTypes) => {
 							<HeartIcon
 								key='like'
 								onClick={props.likeUser}
-								style={{ color: 'red' }}
+								style={{ color: 'red', height: '48px', background: 'black' }}
 							/>
 						</Tooltip>
 					) : (
@@ -62,16 +62,17 @@ const UserCard = (props: UserCardPropTypes) => {
 							<HeartIcon
 								key='like'
 								onClick={props.likeUser}
-								style={{ color: 'red' }}
+									style={{ color: 'red', background: 'black' }}
 							/>
 						</Tooltip>
 					),
 					<Tooltip title='Edit'>
-						<EditOutlined key='edit' onClick={props.editUser} />
+						<EditOutlined key='edit' onClick={props.editUser} style={{ background: 'black' }} />
 					</Tooltip>,
 					<Tooltip title='Delete'>
-						<DeleteFilled key='delete' onClick={props.deleteUser} />
+						<DeleteFilled key='delete' onClick={props.deleteUser} style={{ background: 'black' }} />
 					</Tooltip>,
+
 				]}
 			>
 				<Meta
