@@ -27,6 +27,10 @@
         "prettier"
     ],
     "rules": {
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": [
+            "error"
+        ],
         "react/react-in-jsx-scope": [
             "off"
         ],
@@ -38,6 +42,24 @@
         ],
         "react/no-unescaped-entities": [
             "off"
+        ],
+        "prettier/prettier": [
+            "warn",
+            {
+                "singleQuote": true,
+                "trailingComma": "es5"
+            },
+            "error",
+            {
+                "parser": "flow",
+                "printWidth": 120
+            }
+        ],
+        "arrow-body-style": "off",
+        "prefer-arrow-callback": "off",
+        "quotes": [
+            "error",
+            "single"
         ]
     }
 }
