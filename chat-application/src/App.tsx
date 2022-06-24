@@ -5,7 +5,6 @@ import SignUp from './Components/Authentication/SignUp';
 function App() {
   return (
     <div className="App">
-
       <SignUp />
     </div>
   );

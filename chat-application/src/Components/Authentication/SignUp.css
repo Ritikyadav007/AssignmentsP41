@@ -21,6 +21,7 @@
     border-radius: 0%;
     border: 0px;
     background-color: #2a2a2a;
+    width: 400px;
 }
 
 h3 {
@@ -41,10 +42,12 @@ button {
 
 #terms {
     color: #1aa7ec;
+    cursor: pointer;
 }
 
 #meta-info {
     color: #1aa7ec;
     padding-top: 10px;
     align-self: start;
+    cursor: pointer;
 }
