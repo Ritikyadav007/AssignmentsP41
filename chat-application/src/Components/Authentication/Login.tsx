@@ -3,14 +3,23 @@ import './Login.css';
 
 export default function Login() {
   return (
-    <div className="Login">
+    <div className="Login" data-testid="comp-2">
       <div className="form-container">
-        <h3>Welcome Back!</h3>
+        <h3 data-testid="h3">Welcome Back!</h3>
         <form className="form">
           <div className="mb-3">
-            <label htmlFor="inputEmail" className="form-label">
+            <label
+              htmlFor="inputEmail"
+              className="form-label"
+              data-testid="label"
+            >
               Email address
-              <input type="email" className="form-control" id="inputEmail" />
+              <input
+                type="email"
+                className="form-control"
+                id="inputEmail"
+                data-testid="input"
+              />
             </label>
           </div>
           <div className="mb-3">
@@ -23,11 +32,17 @@ export default function Login() {
               />
             </label>
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button
+            type="submit"
+            className="btn btn-primary"
+            data-testid="button"
+          >
             Continue
           </button>
         </form>
-        <span id="meta-info">Forgot Password?</span>
+        <span id="meta-info" data-testid="meta">
+          Forgot Password?
+        </span>
         <p className="meta">
           Need an account ? <span id="terms">Register</span>
         </p>
