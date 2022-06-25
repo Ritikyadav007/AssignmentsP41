@@ -5,7 +5,7 @@ import './SignUp.css';
 
 export default function SignUp() {
   return (
-    <div className="SignUp">
+    <div className="SignUp" data-testid="comp-1">
       <div className="form-container">
         <h3>Create an account</h3>
         <Avatar
