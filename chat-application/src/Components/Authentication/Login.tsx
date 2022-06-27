@@ -11,15 +11,15 @@ export default function Login() {
             <label
               htmlFor="inputEmail"
               className="form-label"
-              data-testid="label"
-            >
+              data-testid="label">
               Email address
               <input
                 type="email"
                 className="form-control"
                 id="inputEmail"
                 data-testid="input"
-              />
+                required
+                />
             </label>
           </div>
           <div className="mb-3">
@@ -29,14 +29,14 @@ export default function Login() {
                 type="password"
                 className="form-control"
                 id="inputPassword1"
+                required
               />
             </label>
           </div>
           <button
             type="submit"
             className="btn btn-primary"
-            data-testid="button"
-          >
+            data-testid="button">
             Continue
           </button>
         </form>

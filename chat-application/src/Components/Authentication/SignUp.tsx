@@ -17,13 +17,19 @@ export default function SignUp() {
           <div className="mb-3">
             <label htmlFor="name" className="form-label">
               Name
-              <input type="name" className="form-control" id="name" />
+              <input type="name" className="form-control" id="name" required />
             </label>
           </div>
           <div className="mb-3">
             <label htmlFor="inputEmail1" className="form-label">
               Email address
-              <input type="email" className="form-control" id="inputEmail1" />
+              <input
+                type="email"
+                className="form-control"
+                id="inputEmail1"
+                pattern='/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ '
+                required
+              />
             </label>
           </div>
           <div className="mb-3">
@@ -33,13 +39,21 @@ export default function SignUp() {
                 type="password"
                 className="form-control"
                 id="inputPassword1"
+                pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/"
+                required
               />
             </label>
           </div>
           <div className="mb-3">
             <label htmlFor="inputPassword" className="form-label">
               Confirm Password
-              <input type="email" className="form-control" id="inputPassword" />
+              <input
+                type="password"
+                className="form-control"
+                id="inputPassword"
+                pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/"
+                required
+              />
             </label>
           </div>
           <button type="submit" className="btn btn-primary">
