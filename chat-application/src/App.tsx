@@ -1,5 +1,10 @@
 import './App.css';
-import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from 'react-router-dom';
 import Login from './Components/Authentication/Login';
 import SignUp from './Components/Authentication/SignUp';
 

@@ -1,0 +1,16 @@
+export const WELCOME_BACK = 'Welcome Back!';
+export const EMAIL_ADDRESS = 'Email address';
+export const PASSWORD = 'Password';
+export const CONFIRM_PASS = 'Confirm Password';
+export const CONTINUE = 'Continue';
+export const HAVE_ACCOUNT = 'Already have a account?';
+export const META = 'By registering you agree to Messenger\'s ';
+export const TERMS = 'Terms of Service';
+export const POLICY = 'Privacy Policy';
+export const AND = 'and ';
+export const FORGET_PASSWORD = 'Forgot Password?';
+export const NEED_ACCOUNT = 'Need an account? ';
+export const REGISTER = 'Register';
+export const NAME = 'Name';
+export const CREATE_ACCOUNT = 'Create an account';
+export const CHOOSE_PROFILE = 'Choose Profile';

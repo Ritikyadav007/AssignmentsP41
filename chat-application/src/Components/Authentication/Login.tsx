@@ -1,20 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {
+  CONTINUE,
+  EMAIL_ADDRESS,
+  FORGET_PASSWORD,
+  NEED_ACCOUNT,
+  PASSWORD,
+  REGISTER,
+  WELCOME_BACK,
+} from '../../StringStore/Strings';
 import './Login.css';
 
 export default function Login() {
   return (
     <div className="Login" data-testid="comp-2">
       <div className="form-container">
-        <h3 data-testid="h3">Welcome Back!</h3>
+        <h3 data-testid="h3">{WELCOME_BACK}</h3>
         <form className="form">
           <div className="mb-3">
             <label
               htmlFor="inputEmail"
               className="form-label"
-              data-testid="label"
-            >
-              Email address
+              data-testid="label">
+              {EMAIL_ADDRESS}
               <input
                 type="email"
                 className="form-control"
@@ -26,7 +34,7 @@ export default function Login() {
           </div>
           <div className="mb-3">
             <label htmlFor="inputPassword1" className="form-label">
-              Password
+              {PASSWORD}
               <input
                 type="password"
                 className="form-control"
@@ -38,18 +46,17 @@ export default function Login() {
           <button
             type="submit"
             className="btn btn-primary"
-            data-testid="button"
-          >
-            Continue
+            data-testid="button">
+            {CONTINUE}
           </button>
         </form>
         <span id="meta-info" data-testid="meta">
-          Forgot Password?
+          {FORGET_PASSWORD}
         </span>
         <p className="meta">
-          Need an account ?{' '}
+          {NEED_ACCOUNT}
           <span id="terms">
-            <Link to="/SignUp">Register</Link>
+            <Link to="/SignUp">{REGISTER}</Link>
           </span>
         </p>
       </div>
