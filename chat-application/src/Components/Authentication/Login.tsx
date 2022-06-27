@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Login.css';
 
 export default function Login() {
@@ -11,7 +12,8 @@ export default function Login() {
             <label
               htmlFor="inputEmail"
               className="form-label"
-              data-testid="label">
+              data-testid="label"
+            >
               Email address
               <input
                 type="email"
@@ -19,7 +21,7 @@ export default function Login() {
                 id="inputEmail"
                 data-testid="input"
                 required
-                />
+              />
             </label>
           </div>
           <div className="mb-3">
@@ -36,7 +38,8 @@ export default function Login() {
           <button
             type="submit"
             className="btn btn-primary"
-            data-testid="button">
+            data-testid="button"
+          >
             Continue
           </button>
         </form>
@@ -44,7 +47,10 @@ export default function Login() {
           Forgot Password?
         </span>
         <p className="meta">
-          Need an account ? <span id="terms">Register</span>
+          Need an account ?{' '}
+          <span id="terms">
+            <Link to="/SignUp">Register</Link>
+          </span>
         </p>
       </div>
     </div>

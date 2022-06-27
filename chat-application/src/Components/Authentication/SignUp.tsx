@@ -1,6 +1,6 @@
 import { Avatar } from 'antd';
 import 'antd/dist/antd.css';
-import React from 'react';
+import { Link } from 'react-router-dom';
 import './SignUp.css';
 
 export default function SignUp() {
@@ -27,7 +27,7 @@ export default function SignUp() {
                 type="email"
                 className="form-control"
                 id="inputEmail1"
-                pattern='/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ '
+                pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
                 required
               />
             </label>
@@ -39,7 +39,7 @@ export default function SignUp() {
                 type="password"
                 className="form-control"
                 id="inputPassword1"
-                pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/"
+                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$"
                 required
               />
             </label>
@@ -51,7 +51,7 @@ export default function SignUp() {
                 type="password"
                 className="form-control"
                 id="inputPassword"
-                pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/"
+                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$"
                 required
               />
             </label>
@@ -60,7 +60,9 @@ export default function SignUp() {
             Continue
           </button>
         </form>
-        <span id="meta-info">Already have a account</span>
+        <span id="meta-info">
+          <Link to="/Login">Already have a account?</Link>
+        </span>
         <p className="meta">
           By registering you agree to Messenger's{' '}
           <span id="terms">Terms of Service</span> and{' '}
