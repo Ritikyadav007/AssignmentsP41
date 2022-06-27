@@ -1,23 +1,8 @@
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Navigate,
-  Route,
-  Routes,
-} from 'react-router-dom';
-import Login from './Components/Authentication/Login';
-import SignUp from './Components/Authentication/SignUp';
+import ScreensNavigator from './Navigation/ScreensNavigator';
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/SignUp" />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/SignUp" element={<SignUp />} />
-      </Routes>
-    </Router>
-  );
+  return <ScreensNavigator />;
 }
 
 export default App;
