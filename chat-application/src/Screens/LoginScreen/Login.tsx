@@ -1,4 +1,4 @@
-import React from 'react';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import CurrentStrings from '../../i8n';
 import './Login.css';
@@ -13,6 +13,11 @@ export default function Login() {
     REGISTER,
     WELCOME_BACK,
   } = CurrentStrings;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   return (
     <div className="Login" data-testid="comp-2">
       <div className="form-container">
@@ -22,17 +27,19 @@ export default function Login() {
             <label
               htmlFor="inputEmail"
               className="form-label"
-              data-testid="label"
-            >
+              data-testid="label">
               {EMAIL_ADDRESS}
               <input
-                type="email"
+                type="text"
                 className="form-control"
                 id="inputEmail"
                 data-testid="input"
-                required
+                {...register('email', { required: true })}
               />
             </label>
+            {errors.email && (
+              <p className="error">Please enter correct email</p>
+            )}
           </div>
           <div className="mb-3">
             <label htmlFor="inputPassword1" className="form-label">
@@ -41,15 +48,17 @@ export default function Login() {
                 type="password"
                 className="form-control"
                 id="inputPassword1"
-                required
+                {...register('password', { required: true })}
               />
             </label>
+            {errors.email && (
+              <p className="error">Please enter correct email</p>
+            )}
           </div>
           <button
             type="submit"
             className="btn btn-primary"
-            data-testid="button"
-          >
+            data-testid="button">
             {CONTINUE}
           </button>
         </form>

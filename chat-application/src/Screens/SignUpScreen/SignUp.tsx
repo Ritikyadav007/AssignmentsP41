@@ -1,14 +1,17 @@
 import { Avatar } from 'antd';
 import 'antd/dist/antd.css';
-import { useRef } from 'react';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import CurrentStrings from '../../i8n';
 import './SignUp.css';
 
 export default function SignUp() {
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-  const confirmPassRef = useRef(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const {
     AND,
     CHOOSE_PROFILE,
@@ -24,9 +27,8 @@ export default function SignUp() {
     TERMS,
   } = CurrentStrings;
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    console.log(e.tar);
+  const onSubmit = (data: any) => {
+    console.log(data);
   };
 
   return (
@@ -38,25 +40,38 @@ export default function SignUp() {
           src="https://www.kindpng.com/picc/m/780-7804962_cartoon-avatar-png-image-transparent-avatar-user-image.png"
         />
         <p>{CHOOSE_PROFILE}</p>
-        <form className="form" onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">
               {NAME}
-              <input type="name" className="form-control" id="name" required />
+              <input
+                type="name"
+                className="form-control"
+                id="name"
+                {...register('name', { required: true })}
+              />
             </label>
+            {errors.name && <p className="error">Please enter the name</p>}
           </div>
           <div className="mb-3">
             <label htmlFor="inputEmail1" className="form-label">
               {EMAIL_ADDRESS}
               <input
-                type="email"
+                type="text"
                 className="form-control"
                 id="inputEmail1"
-                ref={emailRef}
-                pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-                required
+                {...register('email', {
+                  required: true,
+                  pattern:
+                    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                })}
               />
             </label>
+            {errors.email && (
+              <p className="error">
+                Email should contain the '@' and '.' symbol.
+              </p>
+            )}
           </div>
           <div className="mb-3">
             <label htmlFor="inputPassword1" className="form-label">
@@ -65,11 +80,18 @@ export default function SignUp() {
                 type="password"
                 className="form-control"
                 id="inputPassword1"
-                ref={passwordRef}
-                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$"
-                required
+                {...register('password', {
+                  required: true,
+                  pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/,
+                })}
               />
             </label>
+            {errors.password && (
+              <p className="error">
+                Password should have 1 Capital, 1 small letter and should be
+                6-15 characters long.
+              </p>
+            )}
           </div>
           <div className="mb-3">
             <label htmlFor="inputPassword" className="form-label">
@@ -78,11 +100,15 @@ export default function SignUp() {
                 type="password"
                 className="form-control"
                 id="inputPassword"
-                ref={confirmPassRef}
-                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$"
-                required
+                {...register('confirmPass', {
+                  required: true,
+                  pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/,
+                })}
               />
             </label>
+            {errors.confirmPass && (
+              <p className="error">Please enter the password entered above.</p>
+            )}
           </div>
           <button type="submit" className="btn btn-primary">
             {CONTINUE}

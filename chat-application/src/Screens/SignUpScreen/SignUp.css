@@ -6,6 +6,11 @@
     background-image: url('https://i0.wp.com/chatrandom.download/wp-content/uploads/2021/03/random-video-chat.png?w=1000&ssl=1');
 }
 
+.error{
+    font-size: 11px;
+    color: #ff0000;
+}
+
 
 .form-container {
     padding: 20px;
