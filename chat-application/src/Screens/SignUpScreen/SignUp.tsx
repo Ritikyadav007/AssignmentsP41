@@ -1,11 +1,14 @@
 import { Avatar } from 'antd';
 import 'antd/dist/antd.css';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../store/AuthContext';
 import CurrentStrings from '../../i8n';
 import './SignUp.css';
 
 export default function SignUp() {
+  const [error, setError] = useState<string>();
   const {
     register,
     handleSubmit,
@@ -26,9 +29,21 @@ export default function SignUp() {
     POLICY,
     TERMS,
   } = CurrentStrings;
+  const { signUp } = useAuth();
+  const navigate = useNavigate();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  // eslint-disable-next-line consistent-return
+  const onSubmit = async (data: any) => {
+    if (data.password !== data.confirmPass) {
+      return setError('Passwords do not match');
+    }
+    try {
+      setError('');
+      await signUp(data.email, data.password);
+      navigate('/login');
+    } catch {
+      setError('Failed to SignUp');
+    }
   };
 
   return (
@@ -40,6 +55,7 @@ export default function SignUp() {
           src="https://www.kindpng.com/picc/m/780-7804962_cartoon-avatar-png-image-transparent-avatar-user-image.png"
         />
         <p>{CHOOSE_PROFILE}</p>
+        {error && <p className="error">{error}</p>}
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">
@@ -115,7 +131,7 @@ export default function SignUp() {
           </button>
         </form>
         <span id="meta-info">
-          <Link to="/Login">{HAVE_ACCOUNT}</Link>
+          <Link to="/login">{HAVE_ACCOUNT}</Link>
         </span>
         <p className="meta">
           {META}
