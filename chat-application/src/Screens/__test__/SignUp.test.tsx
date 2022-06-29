@@ -1,7 +1,7 @@
 import { render, screen, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 // import '../../../matchMedia';
-import SignUp from '../SignUp';
+import SignUp from '../SignUpScreen/SignUp';
 
 // afterEach(() => {
 //   cleanup();

@@ -1,6 +1,6 @@
 import { render, screen, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Login from '../Login';
+import Login from '../LoginScreen/Login';
 
 // afterEach(() => {
 //   cleanup();

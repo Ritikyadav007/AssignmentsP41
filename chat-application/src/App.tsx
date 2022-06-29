@@ -1,14 +1,8 @@
 import './App.css';
-import Login from './Components/Authentication/Login';
-import SignUp from './Components/Authentication/SignUp';
+import ScreensNavigator from './Navigation/ScreensNavigator';
 
 function App() {
-  return (
-    <div className="App">
-      <SignUp />
-      <Login />
-    </div>
-  );
+  return <ScreensNavigator />;
 }
 
 export default App;
