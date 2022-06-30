@@ -15,6 +15,8 @@ const allStrings = {
   NAME: 'name',
   CREATE_ACCOUNT: 'create an account',
   CHOOSE_PROFILE: 'choose profile',
+  RESET_PASSWORD: 'reset password',
+  SEND_LINK: 'send link',
 };
 
 export default allStrings;
