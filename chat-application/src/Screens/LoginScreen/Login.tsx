@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../store/AuthContext';
 import CurrentStrings from '../../i8n';
 import './Login.css';
+import { sentenceCase, titleCase } from '../../Utils/methods';
 
 export default function Login() {
   const [error, setError] = useState<string>();
@@ -40,7 +41,7 @@ export default function Login() {
   return (
     <div className="Login" data-testid="comp-2">
       <div className="form-container">
-        <h3 data-testid="h3">{WELCOME_BACK}</h3>
+        <h3 data-testid="h3">{titleCase(WELCOME_BACK)}</h3>
         {error && <p className="error">{error}</p>}
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
@@ -49,7 +50,7 @@ export default function Login() {
               className="form-label"
               data-testid="label"
             >
-              {EMAIL_ADDRESS}
+              {titleCase(EMAIL_ADDRESS)}
               <input
                 type="text"
                 className="form-control"
@@ -64,7 +65,7 @@ export default function Login() {
           </div>
           <div className="mb-3">
             <label htmlFor="inputPassword1" className="form-label">
-              {PASSWORD}
+              {titleCase(PASSWORD)}
               <input
                 type="password"
                 className="form-control"
@@ -81,16 +82,16 @@ export default function Login() {
             className="btn btn-primary"
             data-testid="button"
           >
-            {CONTINUE}
+            {titleCase(CONTINUE)}
           </button>
         </form>
         <span id="meta-info" data-testid="meta">
-          <Link to="/forgetpassword">{FORGET_PASSWORD}</Link>
+          <Link to="/forgetpassword">{titleCase(FORGET_PASSWORD)}</Link>
         </span>
         <p className="meta">
-          {NEED_ACCOUNT}
+          {sentenceCase(NEED_ACCOUNT)}
           <span id="terms">
-            <Link to="/signup">{REGISTER}</Link>
+            <Link to="/signup">{titleCase(REGISTER)}</Link>
           </span>
         </p>
       </div>

@@ -6,18 +6,22 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../store/AuthContext';
 import CurrentStrings from '../../i8n';
 import './SignUp.css';
+import Constants from '../../Utils/constants';
+import { sentenceCase, titleCase } from '../../Utils/methods';
+import ChooseProfile from '../../Components/ChooseProfile';
 
 export default function SignUp() {
   const [error, setError] = useState<string>();
+  const [image, setImage] = useState();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  const { PASSWORD_PATTERN, EMAIL_PATTERN } = Constants;
   const {
     AND,
-    CHOOSE_PROFILE,
     CONFIRM_PASS,
     CONTINUE,
     CREATE_ACCOUNT,
@@ -46,20 +50,28 @@ export default function SignUp() {
     }
   };
 
+  const handleProfilePic = (data: any) => {
+    setImage(data[0]);
+  };
+  const defaultImg =
+    'https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes.png';
+
   return (
     <div className="SignUp" data-testid="comp-1">
       <div className="form-container">
-        <h3>{CREATE_ACCOUNT}</h3>
+        <h3>{sentenceCase(CREATE_ACCOUNT)}</h3>
         <Avatar
           size={100}
-          src="https://www.kindpng.com/picc/m/780-7804962_cartoon-avatar-png-image-transparent-avatar-user-image.png"
+          src={image ? URL.createObjectURL(image) : defaultImg}
         />
-        <p>{CHOOSE_PROFILE}</p>
+        <p>
+          <ChooseProfile handleImage={handleProfilePic} />
+        </p>
         {error && <p className="error">{error}</p>}
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
             <label htmlFor="name" className="form-label">
-              {NAME}
+              {titleCase(NAME)}
               <input
                 type="name"
                 className="form-control"
@@ -71,15 +83,14 @@ export default function SignUp() {
           </div>
           <div className="mb-3">
             <label htmlFor="inputEmail1" className="form-label">
-              {EMAIL_ADDRESS}
+              {titleCase(EMAIL_ADDRESS)}
               <input
                 type="text"
                 className="form-control"
                 id="inputEmail1"
                 {...register('email', {
                   required: true,
-                  pattern:
-                    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  pattern: EMAIL_PATTERN,
                 })}
               />
             </label>
@@ -91,14 +102,14 @@ export default function SignUp() {
           </div>
           <div className="mb-3">
             <label htmlFor="inputPassword1" className="form-label">
-              {PASSWORD}
+              {titleCase(PASSWORD)}
               <input
                 type="password"
                 className="form-control"
                 id="inputPassword1"
                 {...register('password', {
                   required: true,
-                  pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/,
+                  pattern: PASSWORD_PATTERN,
                 })}
               />
             </label>
@@ -111,7 +122,7 @@ export default function SignUp() {
           </div>
           <div className="mb-3">
             <label htmlFor="inputPassword" className="form-label">
-              {CONFIRM_PASS}
+              {titleCase(CONFIRM_PASS)}
               <input
                 type="password"
                 className="form-control"
@@ -127,16 +138,16 @@ export default function SignUp() {
             )}
           </div>
           <button type="submit" className="btn btn-primary">
-            {CONTINUE}
+            {titleCase(CONTINUE)}
           </button>
         </form>
         <span id="meta-info">
-          <Link to="/login">{HAVE_ACCOUNT}</Link>
+          <Link to="/login">{sentenceCase(HAVE_ACCOUNT)}</Link>
         </span>
         <p className="meta">
-          {META}
-          <span id="terms">{TERMS}</span> {AND}
-          <span id="terms">{POLICY}</span>.
+          {sentenceCase(META)}
+          <span id="terms">{titleCase(TERMS)}</span> {AND}
+          <span id="terms">{titleCase(POLICY)}</span>.
         </p>
       </div>
     </div>
