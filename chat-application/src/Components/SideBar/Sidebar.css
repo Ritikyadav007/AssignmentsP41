@@ -1,0 +1,21 @@
+.sidebar{
+    flex: 0.05;
+    display:flex;
+    justify-content: center;
+}
+
+.sidebar_items{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;  
+   
+}
+
+.sidebar_avatar{
+    padding-top: 10px;
+}
+
+.sidebar_items > button.MuiIconButton-root{
+    width: 40px;
+}
