@@ -1,0 +1,12 @@
+.chats{
+    flex:0.7;
+}
+
+.chats_Items{
+    display: flex;
+    justify-content: center;
+    place-items: center;
+    flex-direction: column;
+    height: 100vh;
+
+}
