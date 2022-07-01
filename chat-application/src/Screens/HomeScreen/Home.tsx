@@ -1,4 +1,8 @@
+import Chats from '../../Components/Chats/Chats';
+import FriendList from '../../Components/FriendList/FriendList';
+import Sidebar from '../../Components/SideBar/Sidebar';
 import { useAuth } from '../../store/AuthContext';
+import './Home.css';
 
 export default function Home() {
   const { LogOut } = useAuth();
@@ -10,10 +14,10 @@ export default function Home() {
     }
   };
   return (
-    <div>
-      <button type="submit" onClick={handleLogOut}>
-        LogOut
-      </button>
+    <div className="home">
+      <Sidebar />
+      <FriendList />
+      <Chats />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { Avatar } from 'antd';
 import 'antd/dist/antd.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../store/AuthContext';
@@ -8,7 +8,7 @@ import CurrentStrings from '../../i8n';
 import './SignUp.css';
 import Constants from '../../Utils/constants';
 import { sentenceCase, titleCase } from '../../Utils/methods';
-import ChooseProfile from '../../Components/ChooseProfile';
+import ChooseProfile from '../../Components/ChooseProfile/ChooseProfile';
 
 export default function SignUp() {
   const [error, setError] = useState<string>();
@@ -33,7 +33,7 @@ export default function SignUp() {
     POLICY,
     TERMS,
   } = CurrentStrings;
-  const { signUp } = useAuth();
+  const { signUp, user } = useAuth();
   const navigate = useNavigate();
 
   // eslint-disable-next-line consistent-return

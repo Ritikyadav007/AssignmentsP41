@@ -1,5 +1,5 @@
-import allStrings from '../i8n/en-us';
-import { titleCase } from '../Utils/methods';
+import allStrings from '../../i8n/en-us';
+import { titleCase } from '../../Utils/methods';
 import './ChooseProfile.css';
 
 type ChooseProfileProps = { handleImage: Function };
