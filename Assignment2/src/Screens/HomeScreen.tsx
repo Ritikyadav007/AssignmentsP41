@@ -2,14 +2,13 @@ import { Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ApiState, user } from '../store/reducers';
-import { DarkAppStyle, LightAppStyle } from '../theme';
 import DisplayModal from '../Components/Modal/DisplayModal';
-import NavBar from '../Components/Header/NavBar';
 import { } from '../theme';
 import Header from '../Components/Header/Index';
-import SortMenu from '../Components/Header/SortMenu';
 import UserCard from '../Components/UserCard/UserCard';
 import Loader from '../Components/Loader/Loader';
+import { ThemeContext } from '../themeStore/index';
+import './HomeScreen.css';
 
 const sortTypes: string[] = ['name', 'phone'];
 
@@ -24,7 +23,7 @@ export default function HomeScreen() {
 
     const [sortingType, setSortingType] = useState<string>(sortTypes[0]);
     console.log(sortingType);
-    const [isAcc, setIsAcc] = useState<Boolean>(true);
+    const [sortOrder, setSortOrder] = useState<string>('ASC');
 
     const users = useSelector<ApiState, ApiState['users']>(
         (state) => state.users
@@ -47,8 +46,6 @@ export default function HomeScreen() {
             theme == 'light' ? setTheme('dark') : setTheme('light');
         }
     };
-
-    const AppTheme = theme == 'light' ? LightAppStyle : DarkAppStyle;
 
     const [isEditingUser, setIsEditingUser] = useState<Number | null>(null);
 
@@ -93,34 +90,41 @@ export default function HomeScreen() {
         }
     };
 
+    const setSortingDirection = (val: boolean) => {
+        if (val) {
+            sortOrder === 'ASC' ? setSortOrder('DSC') : setSortOrder('ASC');
+        }
+    };
+
 
     return !isLoaded ? (
         <Loader />
     ) : (
-        <AppTheme>
-            <div>
-                <Header
-                    setSearchTerm={(newSearchTerm: string) => {
-                        setsearchTerm(newSearchTerm);
-                    }}
+            <ThemeContext.Provider value={theme}>
+                <div className='Home' id={theme}>
+                    <Header
+                        setSearchTerm={(newSearchTerm: string) => {
+                            setsearchTerm(newSearchTerm);
+                        }}
                         setSortType={(val: string) => {
                             setSortingType(val);
                         }}
                         sortType={sortTypes}
-                        theme={theme}
                         isThemeChange={getTheme}
-                    // isAcensending={true}
-                    // setSortingDirection={()=> {}}
+                        sortDirection={sortOrder}
+                        setSortDirection={setSortingDirection}
                     />
 
                     <div className='App'>
                         <Row justify='space-around'>
-                            {getSortedUsers().map((item) => {
-                            const { id } = item;
-                            return (
-                                <div className='App-container'>
-                                    <UserCard
-                                        theme={theme}
+                            {(sortOrder === 'ASC'
+                                ? getSortedUsers()
+                                : getSortedUsers().reverse()
+                            ).map((item) => {
+                                const { id } = item;
+                                return (
+                                    <div className='App-container'>
+                                        <UserCard
                                         key={id}
                                         user={item}
                                         deleteUser={() => handleDelete(id)}
@@ -130,14 +134,14 @@ export default function HomeScreen() {
                                 </div>
                             );
                         })}
-                        <DisplayModal
-                            editedUser={isEditingUser}
-                            users={users}
-                            CloseModal={closeEditModal}
-                        />
-                    </Row>
+                            <DisplayModal
+                                editedUser={isEditingUser}
+                                users={users}
+                                CloseModal={closeEditModal}
+                            />
+                        </Row>
+                    </div>
                 </div>
-            </div>
-        </AppTheme>
+            </ThemeContext.Provider>
     );
 }
