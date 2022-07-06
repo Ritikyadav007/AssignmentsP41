@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
+import { collection, getDocs } from '@firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
+import { getDownloadURL, ref } from 'firebase/storage';
 import {
   createContext,
   ReactNode,
@@ -13,6 +15,8 @@ import auth, {
   ResetPassword,
   signUp,
 } from '../Services/AuthService';
+import storage from '../Services/StorageService';
+import db from '../Services/UserService';
 
 type AuthContextProviderProps = {
   children: ReactNode;
@@ -23,6 +27,7 @@ const AuthContext = createContext<any | null>(null);
 export default function AuthContextProvider(props: AuthContextProviderProps) {
   const { children } = props;
   const [user, setUser] = useState<any>();
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -33,11 +38,7 @@ export default function AuthContextProvider(props: AuthContextProviderProps) {
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{ user, signUp, LogIn, LogOut, ResetPassword }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );
 }
 

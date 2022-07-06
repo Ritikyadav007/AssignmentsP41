@@ -56,3 +56,8 @@
 .search_container > ::placeholder {
     font-size: large;
   }
+
+.friendlist_friends{
+    flex: 1;
+    overflow: scroll;
+}

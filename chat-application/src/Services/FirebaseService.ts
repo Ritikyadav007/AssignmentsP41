@@ -25,6 +25,8 @@ class FirebaseService {
 
 const firebaseApp = new FirebaseService(firebaseConfig);
 
+
+
 export default firebaseApp;
 // const app = firebase.initializeApp(firebaseConfig);
 

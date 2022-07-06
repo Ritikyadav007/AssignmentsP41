@@ -5,14 +5,6 @@ import { useAuth } from '../../store/AuthContext';
 import './Home.css';
 
 export default function Home() {
-  const { LogOut } = useAuth();
-  const handleLogOut = async () => {
-    try {
-      await LogOut();
-    } catch {
-      console.log('error');
-    }
-  };
   return (
     <div className="home">
       <Sidebar />

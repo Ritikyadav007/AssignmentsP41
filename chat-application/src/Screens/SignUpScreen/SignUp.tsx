@@ -1,18 +1,22 @@
 import { Avatar } from 'antd';
 import 'antd/dist/antd.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import { list, ref } from 'firebase/storage';
 import { useAuth } from '../../store/AuthContext';
 import CurrentStrings from '../../i8n';
 import './SignUp.css';
 import Constants from '../../Utils/constants';
 import { sentenceCase, titleCase } from '../../Utils/methods';
 import ChooseProfile from '../../Components/ChooseProfile/ChooseProfile';
+import { addUserToStore } from '../../Services/UserService';
+import storage, { uploadImage } from '../../Services/StorageService';
 
 export default function SignUp() {
   const [error, setError] = useState<string>();
-  const [image, setImage] = useState();
+  const [image, setImage] = useState<Blob | null>(null);
+  const [imageUrl, setimageUrl] = useState<string>();
   const {
     register,
     handleSubmit,
@@ -33,7 +37,7 @@ export default function SignUp() {
     POLICY,
     TERMS,
   } = CurrentStrings;
-  const { signUp, user } = useAuth();
+  const { signUp } = useAuth();
   const navigate = useNavigate();
 
   // eslint-disable-next-line consistent-return
@@ -43,7 +47,9 @@ export default function SignUp() {
     }
     try {
       setError('');
-      await signUp(data.email, data.password);
+      const signedUpUser = await signUp(data.email, data.password);
+      await uploadImage(image, signedUpUser.user.uid);
+      addUserToStore(data.name, data.email, signedUpUser.user.uid);
       navigate('/login');
     } catch {
       setError('Failed to SignUp');
@@ -64,7 +70,10 @@ export default function SignUp() {
           size={100}
           src={image ? URL.createObjectURL(image) : defaultImg}
         />
-        <p>
+        <p
+          id="chooseprofile"
+          {...register('chooseprofile', { required: true })}
+        >
           <ChooseProfile handleImage={handleProfilePic} />
         </p>
         {error && <p className="error">{error}</p>}

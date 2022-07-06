@@ -2,3 +2,6 @@ input#file-input{
     display: none;
 }
 
+label{
+    cursor: pointer;
+}
