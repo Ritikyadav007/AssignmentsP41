@@ -1,12 +1,86 @@
 .chats{
     flex:0.7;
+    display: flex;
+    flex-direction: column;
 }
 
-.chats_Items{
+/* .chats_Items{
     display: flex;
     justify-content: center;
     place-items: center;
     flex-direction: column;
     height: 100vh;
 
+} */
+
+.chat_header{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+}
+
+.chat_headerInfo{
+    flex:1;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+
+.chat_headerInfo>h3{
+    color: black;
+    font-size: 25px;
+}
+.chat_headerRight{
+    display: flex;
+    justify-content: space-between;
+    
+}
+.chat_headerRight > button.MuiIconButton-root{
+    width: 40px;
+}
+
+.chat_body{
+    flex: 1;
+    padding: 30px;
+    overflow-y: scroll;
+}
+
+.chat_footer{
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid lightgray;
+}
+
+.chat_footerInput{
+    flex:1;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    margin-right: 10px;
+    background-color: rgb(243, 243, 243);
+    border-radius: 5px;
+}
+
+.chat_footerInput>input{
+    border: none;
+    width: 100%;
+    background-color:rgb(243, 243, 243) ;
+    margin-left: 20px;
+}
+
+.chat_footerInput > input:active{
+    border: none;
+    
+}
+
+.chat_footerInput > button.MuiIconButton-root{
+    width: 40px;
+}
+
+.chat_footerButton>button{
+    border: none;
+    padding: 15px;
+    background-color: #8a3ee2;
+    border-radius: 10px;
+    color: white;
 }
