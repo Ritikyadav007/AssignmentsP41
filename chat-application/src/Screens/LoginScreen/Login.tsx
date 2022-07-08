@@ -25,13 +25,14 @@ export default function Login() {
     formState: { errors },
   } = useForm();
 
-  const { LogIn } = useAuth();
+  const { LogIn, user } = useAuth();
   const navigate = useNavigate();
 
   const onSubmit = async (data: any) => {
     try {
       setError('');
       await LogIn(data.email, data.password);
+
       navigate('/home');
     } catch {
       setError('Check your email address and password.');

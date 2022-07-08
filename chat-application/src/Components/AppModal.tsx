@@ -4,8 +4,8 @@ import 'antd/dist/antd.css';
 
 type AppModalProps = {
   isModalVisible: boolean;
-  handleCancel: ReactEventHandler;
-  title:string;
+  handleCancel: Function;
+  title: string;
   children: ReactNode;
 };
 
@@ -17,10 +17,11 @@ export default function AppModal(props: AppModalProps) {
       title={title}
       visible={isModalVisible}
       footer={null}
-      onOk={handleCancel}
-      onCancel={handleCancel}
+      onCancel={() => {
+        handleCancel();
+      }}
     >
-     {children}
+      {children}
     </Modal>
   );
 }
