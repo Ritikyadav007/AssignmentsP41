@@ -16,7 +16,6 @@ import storage, { uploadImage } from '../../Services/StorageService';
 export default function SignUp() {
   const [error, setError] = useState<string>();
   const [image, setImage] = useState<Blob | null>(null);
-  const [imageUrl, setimageUrl] = useState<string>();
   const {
     register,
     handleSubmit,
