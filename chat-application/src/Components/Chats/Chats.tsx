@@ -3,14 +3,14 @@ import './Chats.css';
 import React, { useEffect, useState } from 'react';
 import CallIcon from '@mui/icons-material/Call';
 import SearchIcon from '@mui/icons-material/Search';
-import SendIcon from '@mui/icons-material/Send';
-import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { IconButton } from '@mui/material/';
 import { useAuth } from '../../store/AuthContext';
 import storage from '../../Services/StorageService';
+import Message from './Message/Message';
+import SendMessage from './SendMessage/SendMessage';
 
 export default function Chats() {
   const [userImage, setuserImage] = useState('');
@@ -51,19 +51,11 @@ export default function Chats() {
           </IconButton>
         </div>
       </div>
-      <div className="chat_body">hello</div>
+      <div className="chat_body">
+        <Message message="hello" time="2:20" />
+      </div>
       <div className="chat_footer">
-        <div className="chat_footerInput">
-          <input type="text" placeholder="Type a Message" />
-          <IconButton>
-            <InsertEmoticonIcon />
-          </IconButton>
-        </div>
-        <div className="chat_footerButton">
-          <button type="submit">
-            <SendIcon />
-          </button>
-        </div>
+        <SendMessage />
       </div>
     </div>
   );
