@@ -1,12 +1,54 @@
 .chats{
     flex:0.7;
+    display: flex;
+    flex-direction: column;
 }
 
-.chats_Items{
+/* .chats_Items{
     display: flex;
     justify-content: center;
     place-items: center;
     flex-direction: column;
     height: 100vh;
 
+} */
+
+.chat_header{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+}
+
+.chat_headerInfo{
+    flex:1;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+
+.chat_headerInfo>h3{
+    color: black;
+    font-size: 25px;
+}
+.chat_headerRight{
+    display: flex;
+    justify-content: space-between;
+    
+}
+.chat_headerRight > button.MuiIconButton-root{
+    width: 40px;
+}
+
+.chat_body{
+    flex: 1;
+    padding: 30px;
+    overflow-y: scroll;
+}
+
+
+
+.chat_footer{
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid lightgray;
 }

@@ -1,0 +1,35 @@
+.chat_messageComp{
+    display: flex;
+}
+
+.chat_recieverComp{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.chat_message{
+ margin-left: 10px;
+ margin-right: 10px;
+ position: relative;
+ color: #ffffff;
+ font-size: 16px;
+ padding-left: 10px;
+ padding-right: 10px;
+ margin-bottom: 0%;
+ background-color:#8a3ee2;
+ border-radius: 10px;
+ width: fit-content;
+ 
+}
+
+.chat_reciever{
+    margin-left: auto;
+    background-color: rgb(243, 243, 243);
+    color: black;
+
+}
+
+.time{
+    margin: 0%;
+    font-size: small;
+}
