@@ -7,6 +7,7 @@ const firebaseConfig = {
   storageBucket: 'chat-app-e3bb9.appspot.com',
   messagingSenderId: '123130287849',
   appId: '1:123130287849:web:591d4f05b73cb33604c278',
+  databaseURL: 'https://chat-app-e3bb9-default-rtdb.firebaseio.com',
 };
 
 class FirebaseService {
