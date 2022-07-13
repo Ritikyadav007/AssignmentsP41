@@ -1,6 +1,6 @@
 import { getDatabase } from 'firebase/database';
 import firebaseApp from './FirebaseService';
 
-const database = getDatabase(firebaseApp.get());
+const realtimeDb = getDatabase(firebaseApp.get());
 
-export default database;
+export default realtimeDb;
