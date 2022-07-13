@@ -6,14 +6,26 @@ import SearchIcon from '@mui/icons-material/Search';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { getDownloadURL, ref } from 'firebase/storage';
+import { set, ref as dbref, onValue, push } from 'firebase/database';
 import { IconButton } from '@mui/material/';
+import firebase from 'firebase/compat/app';
 import { useAuth } from '../../store/AuthContext';
 import storage from '../../Services/StorageService';
 import Message from './Message/Message';
 import SendMessage from './SendMessage/SendMessage';
+import realtimeDb from '../../Services/DatabaseService';
 
 export default function Chats() {
+  const messagesDBRef = dbref(realtimeDb, `groups/${'sadas'}/messages`);
+  const groupDetails = dbref(realtimeDb, `groups/${'sada'}/meta`);
+  // {
+  //   chatName: "Ritik - sam",
+  //   users: [],
+  // }
+
   const [userImage, setuserImage] = useState('');
+  const [message, setMessage] = useState<Array<any>>();
+  const [isLoaded, setisLoaded] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -22,6 +34,28 @@ export default function Chats() {
       setuserImage(url);
     });
   }, []);
+
+  useEffect(() => {
+    const dataRef = dbref(realtimeDb, 'groups/group1/messages');
+    onValue(dataRef, (snapshot) => {
+      const data = snapshot.val();
+      const userMessages = Object.entries(data).map((val: Array<any>) => {
+        return val[1];
+      });
+      console.log(userMessages);
+      setMessage(userMessages);
+    });
+  }, []);
+
+  const handleSentMessage = (msg: string) => {
+    const dbRef = push(dbref(realtimeDb, 'groups/group1/messages'));
+    set(dbRef, {
+      fromUser: user.uid,
+      message: msg,
+      timestamp: new Date().getTime(),
+    });
+    setisLoaded(true);
+  };
 
   return (
     <div className="chats">
@@ -52,10 +86,13 @@ export default function Chats() {
         </div>
       </div>
       <div className="chat_body">
-        <Message message="hello" time="2:20" />
+        {message &&
+          message.map((data) => {
+            return <Message messageData={data} time="2:20" />;
+          })}
       </div>
       <div className="chat_footer">
-        <SendMessage />
+        <SendMessage handleMessage={handleSentMessage} />
       </div>
     </div>
   );
