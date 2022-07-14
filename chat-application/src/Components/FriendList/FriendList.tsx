@@ -27,7 +27,7 @@ export default function FriendList(props: FriendListProps) {
   const [isGroupCreated, setisGroupCreated] = useState<boolean>(false);
 
   const renderGroupList = () => {
-    if (groupList === undefined) {
+    if (groupList === []) {
       console.log('errorrr');
       return null;
     }
@@ -44,6 +44,7 @@ export default function FriendList(props: FriendListProps) {
 
   useEffect(() => {
     const docRef = doc(db, 'users', user.uid);
+    setGroupList([]);
     getDoc(docRef).then((data: any) => {
       setGroupList([]);
       data.data().groups.map((id: string) => {
