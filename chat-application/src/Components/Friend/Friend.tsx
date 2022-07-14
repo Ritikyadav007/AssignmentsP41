@@ -1,19 +1,24 @@
 import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import './Friend.css';
-import React from 'react';
 
 type FriendsProps = {
-  userData: any;
+  groupData: any;
+  handleClick: Function;
 };
 
 export default function Friend(props: FriendsProps) {
-  const { userData } = props;
-  const { name, url } = userData;
-  // console.log(userData);
+  const { groupData, handleClick } = props;
+  const { name } = groupData;
   return (
     <div className="friend">
-      <Avatar size={40} src={url} />
-      <div className="friend_info">
+      <Avatar size={40} src={<UserOutlined />} />
+      <div
+        className="friend_info"
+        onClick={() => {
+          handleClick(groupData);
+        }}
+      >
         <h2>{name}</h2>
         <p>Last Message...</p>
       </div>

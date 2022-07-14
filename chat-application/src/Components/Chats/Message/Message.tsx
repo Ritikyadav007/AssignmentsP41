@@ -5,11 +5,10 @@ import './Message.css';
 
 type MessageProps = {
   messageData: any;
-  time: string;
 };
 
 export default function Message(props: MessageProps) {
-  const { messageData, time } = props;
+  const { messageData } = props;
   const { message, fromUser, timestamp } = messageData;
   const { user } = useAuth();
 

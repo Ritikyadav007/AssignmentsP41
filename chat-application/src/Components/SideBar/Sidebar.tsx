@@ -12,7 +12,7 @@ import { IconButton } from '@mui/material/';
 import './Sidebar.css';
 import { useEffect, useState } from 'react';
 import { getDownloadURL, list, ref } from 'firebase/storage';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from '@firebase/firestore';
 import EditProfile from '../EditProfile/EditProfile';
 import storage, { uploadImage } from '../../Services/StorageService';
 import { useAuth } from '../../store/AuthContext';

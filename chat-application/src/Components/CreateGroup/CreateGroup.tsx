@@ -33,6 +33,7 @@ export default function CreateGroup(props: CreateGroupProps) {
         onChange={(e) => {
           setSlectedUser(e.target.value);
         }}
+        required
       >
         <option>Open this select menu</option>
         {friendList.map((userData: any) => {
