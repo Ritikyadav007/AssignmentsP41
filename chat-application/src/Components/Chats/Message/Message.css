@@ -1,5 +1,6 @@
 .chat_messageComp{
     display: flex;
+    margin :10px
 }
 
 .chat_recieverComp{

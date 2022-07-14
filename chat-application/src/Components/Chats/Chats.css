@@ -42,7 +42,7 @@
 .chat_body{
     flex: 1;
     padding: 30px;
-    overflow-y: scroll;
+    overflow: scroll;
 }
 
 

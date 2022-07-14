@@ -1,19 +1,35 @@
 import { Avatar } from 'antd';
+import { userInfo } from 'os';
+import { useAuth } from '../../../store/AuthContext';
 import './Message.css';
 
 type MessageProps = {
-  message: string;
-  time: string;
+  messageData: any;
 };
 
 export default function Message(props: MessageProps) {
-  const { message, time } = props;
+  const { messageData } = props;
+  const { message, fromUser, timestamp } = messageData;
+  const { user } = useAuth();
+
+  // 3 MINS AGO
+  const messageTimeStamp = new Date(timestamp);
+
+  const timeStampString = `${messageTimeStamp.getHours()}:${messageTimeStamp.getMinutes()}`;
+
   return (
-    <div className={`chat_messageComp ${true && 'chat_recieverComp'} `}>
+    <div
+      className={`chat_messageComp ${
+        fromUser === user.uid && 'chat_recieverComp'
+      } `}
+    >
       <Avatar />
-      <div className={`chat_message ${true && 'chat_reciever'} `}>
-        {message} <br />
-        <span className="time">{time}</span>
+      <div
+        className={`chat_message ${fromUser === user.uid && 'chat_reciever'} `}
+      >
+        {message}
+        <br />
+        <span className="time">{timeStampString}</span>
       </div>
     </div>
   );
