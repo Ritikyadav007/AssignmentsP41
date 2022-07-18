@@ -32,7 +32,6 @@ export default function Login() {
     try {
       setError('');
       await LogIn(data.email, data.password);
-
       navigate('/home');
     } catch {
       setError('Check your email address and password.');

@@ -1,18 +1,17 @@
 import { Avatar } from 'antd';
 import { userInfo } from 'os';
 import { useAuth } from '../../../store/AuthContext';
-import './Message.css';
+import './MessageItemComp.css';
 
 type MessageProps = {
   messageData: any;
 };
 
-export default function Message(props: MessageProps) {
+export default function MessageItemComp(props: MessageProps) {
   const { messageData } = props;
   const { message, fromUser, timestamp } = messageData;
   const { user } = useAuth();
 
-  // 3 MINS AGO
   const messageTimeStamp = new Date(timestamp);
 
   const timeStampString = `${messageTimeStamp.getHours()}:${messageTimeStamp.getMinutes()}`;

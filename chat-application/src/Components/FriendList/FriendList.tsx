@@ -8,6 +8,7 @@ import './FriendList.css';
 import { set, ref as dbref, get, child } from 'firebase/database';
 import { doc, getDoc, updateDoc, arrayUnion } from '@firebase/firestore';
 import { nanoid } from 'nanoid';
+import { PlusOutlined } from '@ant-design/icons';
 import Friend from '../Friend/Friend';
 import db from '../../Services/UserService';
 import { useAuth } from '../../store/AuthContext';
@@ -44,16 +45,18 @@ export default function FriendList(props: FriendListProps) {
 
   useEffect(() => {
     const docRef = doc(db, 'users', user.uid);
-    setGroupList([]);
     getDoc(docRef).then((data: any) => {
-      setGroupList([]);
-      data.data().groups.map((id: string) => {
-        const dbRef = dbref(realtimeDb);
-        get(child(dbRef, `groups/${id}`)).then((snapshot) => {
-          setGroupList((oldArray) => [...oldArray, snapshot.val()]);
+      const dbRef = dbref(realtimeDb);
+      const groupDataPromise = data.data().groups.map((id: string) => {
+        return get(child(dbRef, `groups/${id}`)).then((snapshot) => {
+          return snapshot.val();
         });
       });
+      Promise.all(groupDataPromise).then((values) => {
+        setGroupList(values);
+      });
     });
+    setisGroupCreated(false);
   }, [isGroupCreated, user]);
 
   const handleGroupCreation = async (
@@ -81,6 +84,7 @@ export default function FriendList(props: FriendListProps) {
         name: GroupName,
         members: [user.uid, selectedUser],
       });
+      setisGroupCreated(true);
     }
 
     const userUpdateRef = doc(db, 'users', user.uid);
@@ -115,11 +119,7 @@ export default function FriendList(props: FriendListProps) {
         <div className="friendlist_header">
           <span>Chats</span>
           <IconButton>
-            <NotificationsIcon
-              onClick={() => {
-                setisModalVisible(true);
-              }}
-            />
+            <NotificationsIcon />
           </IconButton>
           {renderCreateGroup()}
         </div>
@@ -130,6 +130,21 @@ export default function FriendList(props: FriendListProps) {
           </div>
         </div>
         {renderGroupList()}
+        <div className="friendlist_creategroup">
+          <button
+            type="button"
+            className="btn btn-light btn-sm"
+            onClick={() => {
+              setisModalVisible(true);
+            }}
+          >
+            {' '}
+            <p>
+              <PlusOutlined />
+            </p>
+            <span>Create Group</span>
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -61,3 +61,21 @@
     flex: 1;
     overflow: scroll;
 }
+
+.friendlist_creategroup {
+    padding: 10px;
+}
+
+.friendlist_creategroup > button{
+    padding: 10px;
+    padding-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.friendlist_creategroup > button>span{
+    padding-left: 10px;
+    padding-bottom: 6px;
+    font-size: 20px;
+}

@@ -1,16 +1,11 @@
-import { Avatar } from 'antd';
 import './Chats.css';
 import React, { useEffect, useState } from 'react';
-import CallIcon from '@mui/icons-material/Call';
-import SearchIcon from '@mui/icons-material/Search';
-import VideoCallIcon from '@mui/icons-material/VideoCall';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { set, ref as dbref, onValue, push } from 'firebase/database';
-import { IconButton } from '@mui/material/';
 import { useAuth } from '../../store/AuthContext';
-import Message from './Message/Message';
+import Message from './MessageItemComp/MessageItemComp';
 import SendMessage from './SendMessage/SendMessage';
 import realtimeDb from '../../Services/DatabaseService';
+import ChatHeader from './ChatHeader/ChatHeader';
 
 type ChatsProps = {
   selectedGroupData: any | undefined;
@@ -21,7 +16,7 @@ export default function Chats(props: ChatsProps) {
   const { name, groupId } = selectedGroupData;
   const groupDetails = dbref(realtimeDb, `groups/${'sada'}/meta`);
 
-  const [message, setMessage] = useState<Array<any>>();
+  const [messages, setMessages] = useState<Array<any>>();
   const [isLoaded, setisLoaded] = useState(false);
   const { user } = useAuth();
 
@@ -36,7 +31,7 @@ export default function Chats(props: ChatsProps) {
         return val[1];
       });
       console.log(userMessages);
-      setMessage(userMessages);
+      setMessages(userMessages);
     });
   }, [groupId, isLoaded]);
 
@@ -55,45 +50,23 @@ export default function Chats(props: ChatsProps) {
   };
 
   const renderMessages = () => {
-    if (message === undefined) {
-      return null;
+    if (messages === undefined) {
+      return [].map((data) => {
+        return <Message messageData={data} />;
+      });
     }
-    return message.map((data) => {
+    return messages.map((data) => {
       return <Message messageData={data} />;
     });
   };
 
-  const renderChatWindow = () => {
-    return (
-      <div className="chats">
-        <div className="chat_header">
-          <Avatar size={45} />
-          <div className="chat_headerInfo">
-            <h3>{name && name}</h3>
-          </div>
-
-          <div className="chat_headerRight">
-            <IconButton>
-              <SearchIcon />
-            </IconButton>
-            <IconButton>
-              <CallIcon />
-            </IconButton>
-            <IconButton>
-              <VideoCallIcon />
-            </IconButton>
-            <IconButton>
-              <MoreHorizIcon />
-            </IconButton>
-          </div>
-        </div>
-        <div className="chat_body">{renderMessages()}</div>
-        <div className="chat_footer">
-          <SendMessage handleMessage={handleSentMessage} />
-        </div>
+  return (
+    <div className="chats">
+      <ChatHeader chatName={name} />
+      <div className="chat_body">{renderMessages()}</div>
+      <div className="chat_footer">
+        <SendMessage handleMessage={handleSentMessage} />
       </div>
-    );
-  };
-
-  return renderChatWindow();
+    </div>
+  );
 }
