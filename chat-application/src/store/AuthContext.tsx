@@ -23,15 +23,21 @@ const AuthContext = createContext<any | null>(null);
 export default function AuthContextProvider(props: AuthContextProviderProps) {
   const { children } = props;
   const [user, setUser] = useState<any>();
+  const [isPending, setisPending] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setisPending(false);
     });
     return () => {
       unsubscribe();
     };
   }, []);
+
+  if (isPending) {
+    return <>Loading...</>;
+  }
 
   return (
     <AuthContext.Provider
