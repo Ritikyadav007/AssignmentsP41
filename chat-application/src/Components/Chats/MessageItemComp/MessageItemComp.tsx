@@ -16,16 +16,17 @@ export default function MessageItemComp(props: MessageProps) {
 
   const timeStampString = `${messageTimeStamp.getHours()}:${messageTimeStamp.getMinutes()}`;
 
+  const messageCompClass = `chat_messageComp ${
+    fromUser === user.uid && 'chat_recieverComp'
+  }`;
+  const messageClass = `chat_message ${
+    fromUser === user.uid && 'chat_reciever'
+  }`;
+
   return (
-    <div
-      className={`chat_messageComp ${
-        fromUser === user.uid && 'chat_recieverComp'
-      } `}
-    >
+    <div className={messageCompClass}>
       <Avatar />
-      <div
-        className={`chat_message ${fromUser === user.uid && 'chat_reciever'} `}
-      >
+      <div className={messageClass}>
         {message}
         <br />
         <span className="time">{timeStampString}</span>
