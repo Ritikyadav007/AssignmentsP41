@@ -8,11 +8,11 @@
     background-color: aliceblue;
 }
 
-#Input2{
-    width: 100%; 
-    background-color: aliceblue;
-}
-
 .button_controls{
     margin-top: 20px;
+}
+
+.list_of_users{
+    height : 150px;
+    overflow-y :scroll;
 }

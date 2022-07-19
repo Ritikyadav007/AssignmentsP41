@@ -9,6 +9,7 @@ import { set, ref as dbref, get, child } from 'firebase/database';
 import { doc, getDoc, updateDoc, arrayUnion } from '@firebase/firestore';
 import { nanoid } from 'nanoid';
 import { PlusOutlined } from '@ant-design/icons';
+import { CheckboxValueType } from 'antd/lib/checkbox/Group';
 import Friend from '../Friend/Friend';
 import db from '../../Services/UserService';
 import { useAuth } from '../../store/AuthContext';
@@ -61,43 +62,57 @@ export default function FriendList(props: FriendListProps) {
 
   const handleGroupCreation = async (
     groupName: string,
-    selectedUser: string,
+    selectedUsers: CheckboxValueType[],
   ) => {
     const GroupId = nanoid();
-    if (groupName !== '') {
-      const dbRef = dbref(realtimeDb, `groups/${GroupId}`);
-      set(dbRef, {
-        groupId: GroupId,
-        name: groupName,
-        members: [user.uid, selectedUser],
-      });
-    } else {
-      const selectedUserName = friendList.filter((friend: any) => {
-        if (friend.uid === selectedUser || friend.uid === user.uid) {
-          return friend.name;
-        }
-      });
-      const GroupName = `${selectedUserName[0].name}-${selectedUserName[1].name}`;
-      const dbRef = dbref(realtimeDb, `groups/${GroupId}`);
-      set(dbRef, {
-        groupId: GroupId,
-        name: GroupName,
-        members: [user.uid, selectedUser],
-      });
-      setisGroupCreated(true);
-    }
+    const dbRef = dbref(realtimeDb, `groups/${GroupId}`);
+    const groupMembers = selectedUsers.map((id) => {
+      return id.toString();
+    });
+    set(dbRef, {
+      groupId: GroupId,
+      name: groupName,
+      members: [user.uid, ...groupMembers],
+    });
+    // selectedUsers.map((member) => {
+    //   set(dbRef, {
+    //     groupId: GroupId,
+    //     name: groupName,
+    //     members: arrayUnion(member),
+    //   });
+    // });
+
+    // } else {
+    //   const selectedUserName = friendList.filter((friend: any) => {
+    //     if (friend.uid === selectedUser || friend.uid === user.uid) {
+    //       return friend.name;
+    //     }
+    //   });
+    //   const GroupName = `${selectedUserName[0].name}-${selectedUserName[1].name}`;
+    //   const dbRef = dbref(realtimeDb, `groups/${GroupId}`);
+    //   set(dbRef, {
+    //     groupId: GroupId,
+    //     name: GroupName,
+    //     members: [user.uid, selectedUser],
+    //   });
+    //   setisGroupCreated(true);
+    // }
 
     const userUpdateRef = doc(db, 'users', user.uid);
     await updateDoc(userUpdateRef, {
       groups: arrayUnion(GroupId),
     });
-    const updateRef = doc(db, 'users', selectedUser);
-    await updateDoc(updateRef, {
-      groups: arrayUnion(GroupId),
+
+    selectedUsers.map(async (id) => {
+      const updateRef = doc(db, 'users', id.toString());
+      await updateDoc(updateRef, {
+        groups: arrayUnion(GroupId),
+      });
     });
+
     setisGroupCreated(true);
     setisModalVisible(false);
-  };
+  };;
 
   const handleCancel = () => {
     setisModalVisible(false);
