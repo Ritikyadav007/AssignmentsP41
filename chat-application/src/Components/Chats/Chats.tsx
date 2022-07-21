@@ -13,8 +13,7 @@ type ChatsProps = {
 
 export default function Chats(props: ChatsProps) {
   const { selectedGroupData } = props;
-  const { name, groupId } = selectedGroupData;
-  const groupDetails = dbref(realtimeDb, `groups/${'sada'}/meta`);
+  const { name, imageUrl, groupId } = selectedGroupData;
 
   const [messages, setMessages] = useState<Array<any>>();
   const [isLoaded, setisLoaded] = useState(false);
@@ -62,7 +61,7 @@ export default function Chats(props: ChatsProps) {
 
   return (
     <div className="chats">
-      <ChatHeader chatName={name} />
+      <ChatHeader chatName={name} chatImage={imageUrl} />
       <div className="chat_body">{renderMessages()}</div>
       <div className="chat_footer">
         <SendMessage handleMessage={handleSentMessage} />

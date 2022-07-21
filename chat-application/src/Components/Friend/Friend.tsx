@@ -13,6 +13,9 @@ export default function Friend(props: FriendsProps) {
   const { name } = groupData;
   const [lastMessage, setLastMessage] = useState<string>();
 
+  const groupAvatar =
+    groupData.imageUrl === undefined ? <UserOutlined /> : groupData.imageUrl;
+
   useEffect(() => {
     if (groupData.messages === undefined) {
       setLastMessage('...');
@@ -26,7 +29,7 @@ export default function Friend(props: FriendsProps) {
 
   return (
     <div className="friend">
-      <Avatar size={40} src={<UserOutlined />} />
+      <Avatar size={40} src={groupAvatar} />
       <div
         className="friend_info"
         onClick={() => {

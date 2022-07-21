@@ -2,13 +2,14 @@
 /* eslint-disable array-callback-return */
 import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import { Checkbox } from 'antd';
+import { Avatar, Checkbox } from 'antd';
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { useAuth } from '../../store/AuthContext';
 import { useUser } from '../../store/UserContext';
 import AppModal from '../AppModal';
 import Friend from '../Friend/Friend';
 import './CreateGroup.css';
+import ChooseProfile from '../ChooseProfile/ChooseProfile';
 
 type CreateGroupProps = {
   isVisible: boolean;
@@ -23,6 +24,7 @@ export default function CreateGroup(props: CreateGroupProps) {
   const [groupName, setGroupName] = useState('');
   const [usersList, setUsersList] = useState<any[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<CheckboxValueType[]>([]);
+  const [groupImage, setGroupImage] = useState<string>('');
 
   useEffect(() => {
     if (friendList !== undefined) {
@@ -57,6 +59,10 @@ export default function CreateGroup(props: CreateGroupProps) {
     );
   };
 
+  const handleGroupImage = (data: any) => {
+    setGroupImage(URL.createObjectURL(data[0]));
+  };
+
   return (
     <AppModal
       title="Create New Group"
@@ -65,6 +71,10 @@ export default function CreateGroup(props: CreateGroupProps) {
     >
       <div className="create_group">
         <div className="create_group_form">
+          <div className="uploadImage">
+            <Avatar size={50} src={groupImage} />
+            <ChooseProfile handleImage={handleGroupImage} />
+          </div>
           <div className="mb-3">
             <label htmlFor="Input1" className="form-label">
               Group Name
@@ -92,7 +102,7 @@ export default function CreateGroup(props: CreateGroupProps) {
             className="btn btn-primary btn-sm"
             onClick={() => {
               if (groupName !== '') {
-                onSave(groupName, selectedUsers);
+                onSave(groupName, selectedUsers, groupImage);
               }
             }}
           >

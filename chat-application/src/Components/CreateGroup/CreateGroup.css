@@ -16,3 +16,10 @@
     height : 150px;
     overflow-y :scroll;
 }
+
+.uploadImage{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

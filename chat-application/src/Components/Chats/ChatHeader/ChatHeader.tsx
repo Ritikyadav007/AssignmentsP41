@@ -10,6 +10,7 @@ import './ChatHeader.css';
 
 type ChatHeaderProps = {
   chatName: string;
+  chatImage: string;
 };
 
 const ChatHeaderButtons = memo(() => {
@@ -32,10 +33,11 @@ const ChatHeaderButtons = memo(() => {
 });
 
 const ChatHeader: React.FC<ChatHeaderProps> = (props) => {
-  const { chatName } = props;
+  const { chatName, chatImage } = props;
+
   return (
     <div className="chat_header">
-      <Avatar size={45} />
+      <Avatar size={45} src={chatImage} />
       <div className="chat_headerInfo">
         <h3>{chatName}</h3>
       </div>

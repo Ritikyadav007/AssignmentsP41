@@ -42,7 +42,7 @@ export default function EditProfile(props: EditProfileProps) {
       handleCancel={onCancel}
     >
       <div className="modal_items">
-        <Avatar size={50} src={newImage && URL.createObjectURL(newImage)}/>
+        <Avatar size={50} src={newImage && URL.createObjectURL(newImage)} />
         <ChooseProfile handleImage={handleNewImage} />
         <div className="modal_form">
           <Form
