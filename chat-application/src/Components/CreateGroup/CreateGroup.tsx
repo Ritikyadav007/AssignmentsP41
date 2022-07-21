@@ -91,7 +91,9 @@ export default function CreateGroup(props: CreateGroupProps) {
             type="button"
             className="btn btn-primary btn-sm"
             onClick={() => {
-              onSave(groupName, selectedUsers);
+              if (groupName !== '') {
+                onSave(groupName, selectedUsers);
+              }
             }}
           >
             Create Group
