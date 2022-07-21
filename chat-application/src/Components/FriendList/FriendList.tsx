@@ -22,27 +22,11 @@ type FriendListProps = {
 };
 export default function FriendList(props: FriendListProps) {
   const { user } = useAuth();
-  const { friendList } = useUser();
   const { handleGroupClick } = props;
   const [isModalVisible, setisModalVisible] = useState(false);
   const [groupList, setGroupList] = useState<Object[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [isGroupCreated, setisGroupCreated] = useState<boolean>(false);
-
-  const renderGroupList = () => {
-    if (groupList === []) {
-      console.log('errorrr');
-      return null;
-    }
-    return (
-      <div className="friendlist_friends">
-        {groupList.map((groupData: Object) => {
-          return (
-            <Friend groupData={groupData} handleClick={handleGroupClick} />
-          );
-        })}
-      </div>
-    );
-  };
 
   useEffect(() => {
     const docRef = doc(db, 'users', user.uid);
@@ -63,6 +47,7 @@ export default function FriendList(props: FriendListProps) {
   const handleGroupCreation = async (
     groupName: string,
     selectedUsers: CheckboxValueType[],
+    groupImage: string,
   ) => {
     const GroupId = nanoid();
     const dbRef = dbref(realtimeDb, `groups/${GroupId}`);
@@ -73,6 +58,7 @@ export default function FriendList(props: FriendListProps) {
       groupId: GroupId,
       name: groupName,
       members: [user.uid, ...groupMembers],
+      imageUrl: groupImage,
     });
     // selectedUsers.map((member) => {
     //   set(dbRef, {
@@ -112,7 +98,7 @@ export default function FriendList(props: FriendListProps) {
 
     setisGroupCreated(true);
     setisModalVisible(false);
-  };;
+  };
 
   const handleCancel = () => {
     setisModalVisible(false);
@@ -125,6 +111,31 @@ export default function FriendList(props: FriendListProps) {
         onCancel={handleCancel}
         onSave={handleGroupCreation}
       />
+    );
+  };
+
+  const fetchSearchedGroup = (Term: string) => {
+    const searchedGroups =
+      Term === ''
+        ? groupList
+        : groupList.filter((group: any) => {
+            return group && group.name.toLowerCase().includes(Term);
+          });
+    return searchedGroups;
+  };
+
+  const renderGroupList = () => {
+    if (fetchSearchedGroup(searchTerm) === []) {
+      return null;
+    }
+    return (
+      <div className="friendlist_friends">
+        {fetchSearchedGroup(searchTerm).map((groupData: Object) => {
+          return (
+            <Friend groupData={groupData} handleClick={handleGroupClick} />
+          );
+        })}
+      </div>
     );
   };
 
@@ -141,7 +152,11 @@ export default function FriendList(props: FriendListProps) {
         <div className="friendlist_search">
           <div className="search_container">
             <SearchIcon />
-            <input type="text" placeholder="Search user" />
+            <input
+              type="text"
+              placeholder="Search user and Groups"
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
         </div>
         {renderGroupList()}
