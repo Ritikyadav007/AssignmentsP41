@@ -1,9 +1,9 @@
 import { Avatar } from 'antd';
-import { getDownloadURL, ref } from 'firebase/storage';
-import { userInfo } from 'os';
 import { useEffect, useState } from 'react';
-import storage from '../../../Services/StorageService';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useAuth } from '../../../store/AuthContext';
+import { useUser } from '../../../store/UserContext';
 import './MessageItemComp.css';
 
 type MessageProps = {
@@ -14,14 +14,13 @@ export default function MessageItemComp(props: MessageProps) {
   const { messageData } = props;
   const { message, fromUser, timestamp } = messageData;
   const { user } = useAuth();
-  const [imageUrl, setImageUrl] = useState<string>();
+  const [imageUrl, setImageUrl] = useState<string>('');
+  const { friendList, getUserImage } = useUser();
 
   useEffect(() => {
-    const imageRef = ref(storage, `assets/${fromUser}/profileimage.jpg`);
-    getDownloadURL(imageRef).then((url) => {
-      setImageUrl(url);
-    });
-  }, [fromUser]);
+    const image = getUserImage(fromUser, friendList);
+    setImageUrl(image);
+  }, [fromUser, friendList, getUserImage]);
 
   const messageTimeStamp = new Date(timestamp);
 
@@ -39,7 +38,7 @@ export default function MessageItemComp(props: MessageProps) {
 
   return (
     <div className={messageCompClass}>
-      <Avatar src={imageUrl} />
+      <Avatar src={<LazyLoadImage src={imageUrl} />} />
       <div className={messageClass}>
         {message}
         <br />
