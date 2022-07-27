@@ -1,6 +1,9 @@
 import { Avatar } from 'antd';
-import { userInfo } from 'os';
+import { useEffect, useState } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useAuth } from '../../../store/AuthContext';
+import { useUser } from '../../../store/UserContext';
 import './MessageItemComp.css';
 
 type MessageProps = {
@@ -11,21 +14,32 @@ export default function MessageItemComp(props: MessageProps) {
   const { messageData } = props;
   const { message, fromUser, timestamp } = messageData;
   const { user } = useAuth();
+  const [imageUrl, setImageUrl] = useState<string>('');
+  const { friendList, getUserImage } = useUser();
+
+  useEffect(() => {
+    const image = getUserImage(fromUser, friendList);
+    setImageUrl(image);
+  }, [fromUser, friendList, getUserImage]);
 
   const messageTimeStamp = new Date(timestamp);
 
-  const timeStampString = `${messageTimeStamp.getHours()}:${messageTimeStamp.getMinutes()}`;
+  const timeStampString = `${messageTimeStamp.getHours()}:${messageTimeStamp
+    .getMinutes()
+    .toString()
+    .padStart(2, '0')}`;
+
+  const messageCompClass = `chat_messageComp ${
+    fromUser === user.uid && 'chat_recieverComp'
+  }`;
+  const messageClass = `chat_message ${
+    fromUser === user.uid && 'chat_reciever'
+  }`;
 
   return (
-    <div
-      className={`chat_messageComp ${
-        fromUser === user.uid && 'chat_recieverComp'
-      } `}
-    >
-      <Avatar />
-      <div
-        className={`chat_message ${fromUser === user.uid && 'chat_reciever'} `}
-      >
+    <div className={messageCompClass}>
+      <Avatar src={<LazyLoadImage src={imageUrl} />} />
+      <div className={messageClass}>
         {message}
         <br />
         <span className="time">{timeStampString}</span>

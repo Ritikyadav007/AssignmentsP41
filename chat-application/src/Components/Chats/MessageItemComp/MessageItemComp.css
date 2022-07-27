@@ -1,6 +1,7 @@
 .chat_messageComp{
     display: flex;
-    margin :10px
+    margin :10px;
+
 }
 
 .chat_recieverComp{
@@ -14,8 +15,8 @@
  position: relative;
  color: #ffffff;
  font-size: 16px;
- padding-left: 10px;
- padding-right: 10px;
+ padding-left: 15px;
+ padding-right: 15px;
  margin-bottom: 0%;
  background-color:#8a3ee2;
  border-radius: 10px;

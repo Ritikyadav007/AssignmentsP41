@@ -13,10 +13,9 @@ type ChatsProps = {
 
 export default function Chats(props: ChatsProps) {
   const { selectedGroupData } = props;
-  const { name, groupId } = selectedGroupData;
-  const groupDetails = dbref(realtimeDb, `groups/${'sada'}/meta`);
+  const { name, imageUrl, groupId } = selectedGroupData;
 
-  const [messages, setMessages] = useState<Array<any>>();
+  const [messages, setMessages] = useState<any[]>([]);
   const [isLoaded, setisLoaded] = useState(false);
   const { user } = useAuth();
 
@@ -27,6 +26,9 @@ export default function Chats(props: ChatsProps) {
     );
     onValue(messagesDBRef, (snapshot) => {
       const data = snapshot.val();
+      if (data === null) {
+        setMessages([]);
+      }
       const userMessages = Object.entries(data).map((val: Array<any>) => {
         return val[1];
       });
@@ -50,11 +52,6 @@ export default function Chats(props: ChatsProps) {
   };
 
   const renderMessages = () => {
-    if (messages === undefined) {
-      return [].map((data) => {
-        return <Message messageData={data} />;
-      });
-    }
     return messages.map((data) => {
       return <Message messageData={data} />;
     });
@@ -62,7 +59,7 @@ export default function Chats(props: ChatsProps) {
 
   return (
     <div className="chats">
-      <ChatHeader chatName={name} />
+      <ChatHeader chatName={name} chatImage={imageUrl} />
       <div className="chat_body">{renderMessages()}</div>
       <div className="chat_footer">
         <SendMessage handleMessage={handleSentMessage} />

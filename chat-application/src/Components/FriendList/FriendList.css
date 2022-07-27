@@ -47,6 +47,7 @@
 .search_container > input {
     border: none;
     margin-left: 15px;
+    width: 100%;
 }
 
 .search_container > .MuiSvgIcon-root{

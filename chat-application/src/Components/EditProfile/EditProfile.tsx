@@ -1,6 +1,6 @@
 import { doc, getDoc } from '@firebase/firestore';
 import { Avatar, Button, Form, Input } from 'antd';
-import React, { ReactEventHandler, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import db from '../../Services/UserService';
 import { useAuth } from '../../store/AuthContext';
 import AppModal from '../AppModal';
@@ -42,7 +42,7 @@ export default function EditProfile(props: EditProfileProps) {
       handleCancel={onCancel}
     >
       <div className="modal_items">
-        <Avatar size={50} src={newImage && URL.createObjectURL(newImage)}/>
+        <Avatar size={50} src={newImage && URL.createObjectURL(newImage)} />
         <ChooseProfile handleImage={handleNewImage} />
         <div className="modal_form">
           <Form

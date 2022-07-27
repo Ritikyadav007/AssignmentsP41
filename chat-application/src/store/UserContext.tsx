@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
 /* eslint-disable react/jsx-no-constructed-context-values */
 import { collection, getDocs } from '@firebase/firestore';
 import { getDownloadURL, ref } from 'firebase/storage';
@@ -37,8 +39,17 @@ export default function UserContextProvider(props: UserContextProviderProps) {
     });
   }, []);
 
+  const getUserImage = (userId: string, usersList: any[]) => {
+    const userData = usersList.filter((user: any) => {
+      if (user.uid === userId) {
+        return user;
+      }
+    });
+    return userData[0].url;
+  };
+
   return (
-    <UserContext.Provider value={{ friendList }}>
+    <UserContext.Provider value={{ friendList, getUserImage }}>
       {children}
     </UserContext.Provider>
   );

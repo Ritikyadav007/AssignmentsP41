@@ -1,12 +1,13 @@
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
-import React, { useState } from 'react';
-import Form from 'react-bootstrap/Form';
+import { useEffect, useState } from 'react';
+import { Avatar, Checkbox } from 'antd';
+import type { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { useAuth } from '../../store/AuthContext';
 import { useUser } from '../../store/UserContext';
 import AppModal from '../AppModal';
-import Friend from '../Friend/Friend';
 import './CreateGroup.css';
+import ChooseProfile from '../ChooseProfile/ChooseProfile';
 
 type CreateGroupProps = {
   isVisible: boolean;
@@ -19,7 +20,27 @@ export default function CreateGroup(props: CreateGroupProps) {
   const { friendList } = useUser();
   const { isVisible, onCancel, onSave } = props;
   const [groupName, setGroupName] = useState('');
-  const [selectedUser, setSlectedUser] = useState('');
+  const [usersList, setUsersList] = useState<any[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<CheckboxValueType[]>([]);
+  const [groupImage, setGroupImage] = useState<string>('');
+
+  useEffect(() => {
+    if (friendList !== undefined) {
+      setUsersList([]);
+      friendList.map((data: any) => {
+        if (user.uid !== data.uid) {
+          setUsersList((oldarray: any[]) => [
+            ...oldarray,
+            { label: data.name, value: data.uid },
+          ]);
+        }
+      });
+    }
+  }, [friendList, user]);
+
+  const onChange = (checkedValues: CheckboxValueType[]) => {
+    setSelectedUsers(checkedValues);
+  };
 
   const renderFriendList = () => {
     if (!friendList) {
@@ -28,22 +49,18 @@ export default function CreateGroup(props: CreateGroupProps) {
     }
 
     return (
-      <Form.Select
-        aria-label="Default select example"
-        onChange={(e) => {
-          setSlectedUser(e.target.value);
-        }}
-        required
-      >
-        <option>Open this select menu</option>
-        {friendList.map((userData: any) => {
-          if (userData.uid !== user.uid) {
-            return <option value={userData.uid}>{userData.name}</option>;
-          }
-        })}
-      </Form.Select>
+      <Checkbox.Group
+        style={{ display: 'flex', flexDirection: 'column' }}
+        options={usersList}
+        onChange={onChange}
+      />
     );
   };
+
+  const handleGroupImage = (data: any) => {
+    setGroupImage(URL.createObjectURL(data[0]));
+  };
+
   return (
     <AppModal
       title="Create New Group"
@@ -52,6 +69,10 @@ export default function CreateGroup(props: CreateGroupProps) {
     >
       <div className="create_group">
         <div className="create_group_form">
+          <div className="uploadImage">
+            <Avatar size={50} src={groupImage} />
+            <ChooseProfile handleImage={handleGroupImage} />
+          </div>
           <div className="mb-3">
             <label htmlFor="Input1" className="form-label">
               Group Name
@@ -63,22 +84,24 @@ export default function CreateGroup(props: CreateGroupProps) {
               onChange={(e) => {
                 setGroupName(e.target.value);
               }}
+              required
             />
           </div>
           <div className="mb-3">
             <label htmlFor="Input2" className="form-label">
-              Group Members
+              Select Group Members :
             </label>
-            <input type="text" className="form-control" id="Input2" />
           </div>
         </div>
-        {renderFriendList()}
+        <div className="list_of_users">{renderFriendList()}</div>
         <div className="button_controls">
           <button
             type="button"
             className="btn btn-primary btn-sm"
             onClick={() => {
-              onSave(groupName, selectedUser);
+              if (groupName !== '') {
+                onSave(groupName, selectedUsers, groupImage);
+              }
             }}
           >
             Create Group
