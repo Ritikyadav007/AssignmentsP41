@@ -1,6 +1,6 @@
 import { doc, getDoc } from '@firebase/firestore';
 import { Avatar, Button, Form, Input } from 'antd';
-import React, { ReactEventHandler, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import db from '../../Services/UserService';
 import { useAuth } from '../../store/AuthContext';
 import AppModal from '../AppModal';

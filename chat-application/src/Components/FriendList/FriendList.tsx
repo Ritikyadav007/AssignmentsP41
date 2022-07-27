@@ -13,7 +13,6 @@ import { CheckboxValueType } from 'antd/lib/checkbox/Group';
 import Friend from '../Friend/Friend';
 import db from '../../Services/UserService';
 import { useAuth } from '../../store/AuthContext';
-import { useUser } from '../../store/UserContext';
 import CreateGroup from '../CreateGroup/CreateGroup';
 import realtimeDb from '../../Services/DatabaseService';
 

@@ -1,13 +1,11 @@
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
-import React, { useEffect, useState } from 'react';
-import Form from 'react-bootstrap/Form';
+import { useEffect, useState } from 'react';
 import { Avatar, Checkbox } from 'antd';
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { useAuth } from '../../store/AuthContext';
 import { useUser } from '../../store/UserContext';
 import AppModal from '../AppModal';
-import Friend from '../Friend/Friend';
 import './CreateGroup.css';
 import ChooseProfile from '../ChooseProfile/ChooseProfile';
 
@@ -38,7 +36,7 @@ export default function CreateGroup(props: CreateGroupProps) {
         }
       });
     }
-  }, [friendList]);
+  }, [friendList, user]);
 
   const onChange = (checkedValues: CheckboxValueType[]) => {
     setSelectedUsers(checkedValues);

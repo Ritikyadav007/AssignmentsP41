@@ -3,15 +3,13 @@
 import { Avatar } from 'antd';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
-import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
-import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import Brightness2OutlinedIcon from '@mui/icons-material/Brightness2Outlined';
 import { IconButton } from '@mui/material/';
 import './Sidebar.css';
+import { PoweroffOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
-import { getDownloadURL, list, ref } from 'firebase/storage';
+import { getDownloadURL, ref } from 'firebase/storage';
 import { doc, updateDoc } from '@firebase/firestore';
 import EditProfile from '../EditProfile/EditProfile';
 import storage, { uploadImage } from '../../Services/StorageService';
@@ -20,20 +18,12 @@ import db from '../../Services/UserService';
 import { useUser } from '../../store/UserContext';
 
 export default function Sidebar() {
-  const Icons = [
-    AccountCircleOutlinedIcon,
-    ChatOutlinedIcon,
-    GroupOutlinedIcon,
-    AssignmentIndOutlinedIcon,
-    SettingsOutlinedIcon,
-    LanguageOutlinedIcon,
-    Brightness2OutlinedIcon,
-  ];
-
   const [isModalVisible, setisModalVisible] = useState(false);
   const [userImage, setuserImage] = useState('');
   const { LogOut, user } = useAuth();
   const { friendList } = useUser();
+
+  const Icons = [ChatOutlinedIcon, PoweroffOutlined, Brightness2OutlinedIcon];
 
   const handleCancel = () => {
     setisModalVisible(false);
@@ -50,7 +40,6 @@ export default function Sidebar() {
     await updateDoc(updateRef, {
       name,
     });
-   
   };
 
   const handleLogOut = async () => {
@@ -78,6 +67,23 @@ export default function Sidebar() {
     );
   };
 
+  const renderSiderBarIcons = () => {
+    return Icons.map((Icon: any) => {
+      if (Icon === PoweroffOutlined) {
+        return (
+          <IconButton>
+            <Icon onClick={handleLogOut} />
+          </IconButton>
+        );
+      }
+      return (
+        <IconButton>
+          <Icon />
+        </IconButton>
+      );
+    });
+  };
+
   return (
     <div className="sidebar">
       <div className="sidebar_items">
@@ -92,24 +98,7 @@ export default function Sidebar() {
           />
           {renderEditModal()}
         </IconButton>
-        <IconButton>
-          <ChatOutlinedIcon />
-        </IconButton>
-        <IconButton>
-          <GroupOutlinedIcon />
-        </IconButton>
-        <IconButton>
-          <AssignmentIndOutlinedIcon />
-        </IconButton>
-        <IconButton>
-          <SettingsOutlinedIcon onClick={handleLogOut} />
-        </IconButton>
-        <IconButton>
-          <LanguageOutlinedIcon />
-        </IconButton>
-        <IconButton>
-          <Brightness2OutlinedIcon />
-        </IconButton>
+        {renderSiderBarIcons()}
       </div>
     </div>
   );
