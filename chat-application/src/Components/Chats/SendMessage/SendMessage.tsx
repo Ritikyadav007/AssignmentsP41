@@ -2,7 +2,7 @@ import SendIcon from '@mui/icons-material/Send';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import { IconButton } from '@mui/material/';
 import './SendMessage.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type SendMessageProps = {
   handleMessage: Function;
@@ -10,13 +10,25 @@ type SendMessageProps = {
 
 export default function SendMessage(props: SendMessageProps) {
   const [message, setMessage] = useState('');
+  const [rows, setRows] = useState(1);
   const { handleMessage } = props;
+
+  useEffect(() => {
+    const rowlen = message.split('\n');
+
+    if (rowlen.length < 10) {
+      setRows(rowlen.length);
+    } else {
+      setRows(10);
+    }
+  }, [message]);
+
   return (
     <>
       <div className="chat_footerInput">
-        <input
+        <textarea
           value={message}
-          type="text"
+          rows={rows}
           placeholder="Type a Message"
           onChange={(e) => {
             e.preventDefault();
