@@ -15,7 +15,7 @@ export default function Chats(props: ChatsProps) {
   const { selectedGroupData } = props;
   const { name, imageUrl, groupId } = selectedGroupData;
 
-  const [messages, setMessages] = useState<Array<any>>();
+  const [messages, setMessages] = useState<any[]>([]);
   const [isLoaded, setisLoaded] = useState(false);
   const { user } = useAuth();
 
@@ -26,6 +26,9 @@ export default function Chats(props: ChatsProps) {
     );
     onValue(messagesDBRef, (snapshot) => {
       const data = snapshot.val();
+      if (data === null) {
+        setMessages([]);
+      }
       const userMessages = Object.entries(data).map((val: Array<any>) => {
         return val[1];
       });
@@ -49,11 +52,6 @@ export default function Chats(props: ChatsProps) {
   };
 
   const renderMessages = () => {
-    if (messages === undefined) {
-      return [].map((data) => {
-        return <Message messageData={data} />;
-      });
-    }
     return messages.map((data) => {
       return <Message messageData={data} />;
     });
