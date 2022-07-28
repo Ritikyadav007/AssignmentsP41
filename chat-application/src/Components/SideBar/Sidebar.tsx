@@ -32,7 +32,7 @@ export default function Sidebar() {
   const handleUserChanges = async (
     name: string,
     phone: string,
-    newImage: any,
+    newImage: any
   ) => {
     setisModalVisible(false);
     uploadImage(newImage, user.uid);
@@ -88,7 +88,7 @@ export default function Sidebar() {
     <div className="sidebar">
       <div className="sidebar_items">
         <div className="sidebar_avatar">
-          <Avatar size={45} src={userImage} />
+          <Avatar size={40} src={userImage} />
         </div>
         <IconButton>
           <AccountCircleOutlinedIcon
