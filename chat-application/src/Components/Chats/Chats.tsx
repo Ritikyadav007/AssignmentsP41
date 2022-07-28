@@ -32,7 +32,7 @@ export default function Chats(props: ChatsProps) {
       const userMessages = Object.entries(data).map((val: Array<any>) => {
         return val[1];
       });
-      console.log(userMessages);
+      // console.log(userMessages);
       setMessages(userMessages);
     });
   }, [groupId, isLoaded]);
@@ -59,7 +59,9 @@ export default function Chats(props: ChatsProps) {
 
   return (
     <div className="chats">
-      <ChatHeader chatName={name} chatImage={imageUrl} />
+      <div className="header">
+        <ChatHeader chatName={name} chatImage={imageUrl} />
+      </div>
       <div className="chat_body">{renderMessages()}</div>
       <div className="chat_footer">
         <SendMessage handleMessage={handleSentMessage} />

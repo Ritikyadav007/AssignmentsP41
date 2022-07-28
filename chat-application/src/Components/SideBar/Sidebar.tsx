@@ -3,7 +3,6 @@
 import { Avatar } from 'antd';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import Brightness2OutlinedIcon from '@mui/icons-material/Brightness2Outlined';
 import { IconButton } from '@mui/material/';
 import './Sidebar.css';
@@ -15,13 +14,11 @@ import EditProfile from '../EditProfile/EditProfile';
 import storage, { uploadImage } from '../../Services/StorageService';
 import { useAuth } from '../../store/AuthContext';
 import db from '../../Services/UserService';
-import { useUser } from '../../store/UserContext';
 
 export default function Sidebar() {
   const [isModalVisible, setisModalVisible] = useState(false);
   const [userImage, setuserImage] = useState('');
   const { LogOut, user } = useAuth();
-  const { friendList } = useUser();
 
   const Icons = [ChatOutlinedIcon, PoweroffOutlined, Brightness2OutlinedIcon];
 
@@ -32,7 +29,7 @@ export default function Sidebar() {
   const handleUserChanges = async (
     name: string,
     phone: string,
-    newImage: any
+    newImage: any,
   ) => {
     setisModalVisible(false);
     uploadImage(newImage, user.uid);
@@ -55,7 +52,7 @@ export default function Sidebar() {
     getDownloadURL(imageRef).then((url) => {
       setuserImage(url);
     });
-  }, []);
+  }, [user.uid]);
 
   const renderEditModal = () => {
     return (

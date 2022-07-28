@@ -1,5 +1,4 @@
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
-import { useState } from 'react';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import firebaseApp from './FirebaseService';
 
 const storage = getStorage(firebaseApp.get());
