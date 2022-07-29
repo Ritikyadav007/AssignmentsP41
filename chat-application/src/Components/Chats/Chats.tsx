@@ -9,10 +9,11 @@ import ChatHeader from './ChatHeader/ChatHeader';
 
 type ChatsProps = {
   selectedGroupData: any | undefined;
+  handleBackButton: Function;
 };
 
 export default function Chats(props: ChatsProps) {
-  const { selectedGroupData } = props;
+  const { selectedGroupData, handleBackButton } = props;
   const { name, imageUrl, groupId } = selectedGroupData;
 
   const [messages, setMessages] = useState<any[]>([]);
@@ -60,7 +61,11 @@ export default function Chats(props: ChatsProps) {
   return (
     <div className="chats">
       <div className="header">
-        <ChatHeader chatName={name} chatImage={imageUrl} />
+        <ChatHeader
+          chatName={name}
+          chatImage={imageUrl}
+          handleClick={handleBackButton}
+        />
       </div>
       <div className="chat_body">{renderMessages()}</div>
       <div className="chat_footer">

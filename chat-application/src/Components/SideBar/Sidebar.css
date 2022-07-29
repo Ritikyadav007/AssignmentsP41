@@ -27,6 +27,7 @@
     .sidebar{
         display:flex;
         flex-direction: row;
+        border-bottom: 1px solid lightgray;
     }
     
     .sidebar_items{

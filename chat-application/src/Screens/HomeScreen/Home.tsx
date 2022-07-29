@@ -6,12 +6,12 @@ import RenderChat from '../../Components/RenderChat/RenderChat';
 import Sidebar from '../../Components/SideBar/Sidebar';
 import Notification from '../../Components/Notification';
 import { onMessageListener } from '../../Services/CloudMessageService';
-import { useAuth } from '../../store/AuthContext';
 import './Home.css';
 
 export default function Home() {
   const [groupData, setGroupData] = useState<any>();
   const [show, setShow] = useState(false);
+  const [activeComp, setActiveComp] = useState('friendlist');
   const [notification, setNotification] = useState({
     title: 'hello',
     body: 'hiiii',
@@ -31,19 +31,44 @@ export default function Home() {
     setGroupData(data);
   };
   return (
-    <div className="home">
-      {show ? (
-        <ReactNotification
-          title={notification.title}
-          body={notification.body}
-        />
-      ) : (
-        <> </>
-      )}
-      <Notification />
-      <Sidebar />
-      <FriendList handleGroupClick={getGroupData} />
-      {groupData ? <Chats selectedGroupData={groupData} /> : <RenderChat />}
+    <div>
+      <div className="home">
+        {show ? (
+          <ReactNotification
+            title={notification.title}
+            body={notification.body}
+          />
+        ) : (
+          <> </>
+        )}
+        <Notification />
+        <Sidebar />
+        <FriendList handleGroupClick={getGroupData} />
+        {groupData ? (
+          <Chats selectedGroupData={groupData} handleBackButton={() => {}} />
+        ) : (
+          <RenderChat />
+        )}
+      </div>
+      <div className="mobileScreen">
+        <Sidebar />
+        {activeComp === 'friendlist' && (
+          <FriendList
+            handleGroupClick={(data: any) => {
+              setGroupData(data);
+              setActiveComp('chat');
+            }}
+          />
+        )}
+        {activeComp === 'chat' && (
+          <Chats
+            selectedGroupData={groupData}
+            handleBackButton={() => {
+              setActiveComp('friendlist');
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 }
