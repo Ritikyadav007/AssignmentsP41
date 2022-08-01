@@ -54,7 +54,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = (props) => {
         </IconButton>
         <Avatar size={45} src={avatar} />
         <div className="chat_headerInfo">
-          <h3>{chatName}</h3>
+          <h3>{chatName.slice(0, 8)}</h3>
         </div>
         <ChatHeaderButtons />
       </div>
