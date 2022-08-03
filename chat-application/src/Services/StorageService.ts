@@ -3,7 +3,7 @@ import firebaseApp from './FirebaseService';
 
 const storage = getStorage(firebaseApp.get());
 
-export const uploadImage = (image: any, userId: string) => {
+export const uploadImage = (image: File, userId: string) => {
   if (image == null) return;
   const imageRef = ref(storage, `assets/${userId}/profileimage.jpg`);
   uploadBytes(imageRef, image).then(() => {

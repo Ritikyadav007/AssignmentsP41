@@ -21,7 +21,7 @@ const GetToken = () => {
     .then((Token) => {
       if (Token) {
         console.log('current token for client: ', Token);
-        // Perform any other neccessary action with the token
+        // Perform other neccessary action with the token
       } else {
         // Show permission request UI
         console.log(

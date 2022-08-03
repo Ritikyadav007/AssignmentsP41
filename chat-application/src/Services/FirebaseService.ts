@@ -13,7 +13,7 @@ const firebaseConfig = {
 class FirebaseService {
   private instance: any;
 
-  constructor(config: any) {
+  constructor(config: Object) {
     if (!this.instance) {
       this.instance = firebase.initializeApp(config);
     }

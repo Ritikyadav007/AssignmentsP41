@@ -15,7 +15,7 @@ import storage, { uploadImage } from '../../Services/StorageService';
 
 export default function SignUp() {
   const [error, setError] = useState<string>();
-  const [image, setImage] = useState<Blob | null>(null);
+  const [image, setImage] = useState<File>();
   const {
     register,
     handleSubmit,
@@ -47,7 +47,7 @@ export default function SignUp() {
     try {
       setError('');
       const signedUpUser = await signUp(data.email, data.password);
-      await uploadImage(image, signedUpUser.user.uid);
+      image && (await uploadImage(image, signedUpUser.user.uid));
       addUserToStore(data.name, data.email, signedUpUser.user.uid);
       navigate('/login');
     } catch {
@@ -55,7 +55,7 @@ export default function SignUp() {
     }
   };
 
-  const handleProfilePic = (data: any) => {
+  const handleProfilePic = (data: FileList) => {
     setImage(data[0]);
   };
   const defaultImg =

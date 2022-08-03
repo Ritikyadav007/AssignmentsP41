@@ -29,7 +29,7 @@ export default function Sidebar() {
   const handleUserChanges = async (
     name: string,
     phone: string,
-    newImage: any,
+    newImage: File,
   ) => {
     setisModalVisible(false);
     uploadImage(newImage, user.uid);

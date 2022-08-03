@@ -19,7 +19,7 @@ export default function EditProfile(props: EditProfileProps) {
   const [name, setName] = useState<string>();
   const [phone, setPhone] = useState<string>();
   const [currentUserData, setcurrentUserData] = useState<any>();
-  const [newImage, setnewImage] = useState<any>();
+  const [newImage, setnewImage] = useState<File>();
 
   useEffect(() => {
     const userRef = doc(db, 'users', user.uid);
@@ -31,7 +31,7 @@ export default function EditProfile(props: EditProfileProps) {
     });
   }, []);
 
-  const handleNewImage = (data: any) => {
+  const handleNewImage = (data: FileList) => {
     setnewImage(data[0]);
   };
 
