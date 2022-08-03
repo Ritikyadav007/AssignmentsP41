@@ -1,6 +1,7 @@
 import { Avatar } from 'antd';
 import './Friend.css';
 import { useEffect, useState } from 'react';
+import { Message } from '../Chats/MessageItemComp/MessageItemComp';
 
 type FriendsProps = {
   groupData: any;
@@ -22,8 +23,8 @@ export default function Friend(props: FriendsProps) {
       setLastMessage('...');
     } else {
       const { messages } = groupData;
-      const msgArray = Object.values(messages);
-      const lastMsg: any = msgArray[msgArray.length - 1];
+      const msgArray: Message[] = Object.values(messages);
+      const lastMsg: Message = msgArray[msgArray.length - 1];
       if (lastMsg.message.length > 10) {
         setLastMessage(`${lastMsg.message.slice(0, 9)}...`);
       } else {
