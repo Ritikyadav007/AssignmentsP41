@@ -6,7 +6,6 @@ const store = configureStore({
   reducer: {
     groups: groupReducer,
   },
-  middleware: [thunkMiddleware],
 });
 
 export type AppDispatch = typeof store.dispatch;
