@@ -46,18 +46,18 @@ export default function GroupListComp(props: FriendListProps) {
 
   useEffect(() => {
     // dispatch(fetchGroups(user.uid));
-    // const docRef = doc(db, 'users', user.uid);
-    // getDoc(docRef).then((data: any) => {
-    //   const dbRef = dbref(realtimeDb);
-    //   const groupDataPromise = data.data().groups.map((id: string) => {
-    //     return get(child(dbRef, `groups/${id}`)).then((snapshot) => {
-    //       return snapshot.val();
-    //     });
-    //   });
-    //   Promise.all(groupDataPromise).then((values) => {
-    //     setGroupList(values);
-    //   });
-    // });
+    const docRef = doc(db, 'users', user.uid);
+    getDoc(docRef).then((data: any) => {
+      const dbRef = dbref(realtimeDb);
+      const groupDataPromise = data.data().groups.map((id: string) => {
+        return get(child(dbRef, `groups/${id}`)).then((snapshot) => {
+          return snapshot.val();
+        });
+      });
+      Promise.all(groupDataPromise).then((values) => {
+        setGroupList(values);
+      });
+    });
     setisGroupCreated(false);
   }, [user]);
 

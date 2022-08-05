@@ -11,6 +11,7 @@ import './Home.css';
 import { fetchGroups, GroupState } from '../../store/redux/reducers/GroupSlice';
 import { useAuth } from '../../store/AuthContext';
 import { AppDispatch } from '../../store/redux/store';
+import { setString, StringState } from '../../store/redux/reducers/StrSlice';
 
 // const AppStore = {
 //   currentUser: {},
@@ -35,12 +36,12 @@ export default function Home() {
     title: 'hello',
     body: 'hiiii',
   });
-  const groupslist = useSelector((state: GroupState) => state.groupList);
+  const stringVal = useSelector((state: StringState) => state.str);
   const { user } = useAuth();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchGroups(user.uid));
+    dispatch(setString('hello'));
   }, []);
 
   onMessageListener()
@@ -56,7 +57,7 @@ export default function Home() {
   const getGroupData = (data: any) => {
     setGroupData(data);
   };
-  console.log(groupslist);
+  console.log(stringVal);
   return (
     <div>
       <div className="home">

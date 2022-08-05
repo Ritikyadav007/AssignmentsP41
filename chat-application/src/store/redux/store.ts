@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import thunkMiddleware from 'redux-thunk';
 import groupReducer from './reducers/GroupSlice';
+import strReducer from './reducers/StrSlice';
 
 const store = configureStore({
   reducer: {
-    groups: groupReducer,
+    strSlice: strReducer,
   },
 });
 
