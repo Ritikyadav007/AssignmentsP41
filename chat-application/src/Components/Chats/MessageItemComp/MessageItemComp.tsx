@@ -6,8 +6,14 @@ import { useAuth } from '../../../store/AuthContext';
 import { useUser } from '../../../store/UserContext';
 import './MessageItemComp.css';
 
+export type Message = {
+  fromUser: string;
+  message: string;
+  timestamp: number;
+};
+
 type MessageProps = {
-  messageData: any;
+  messageData: Message;
 };
 
 export default function MessageItemComp(props: MessageProps) {
@@ -40,8 +46,7 @@ export default function MessageItemComp(props: MessageProps) {
     <div className={messageCompClass}>
       <Avatar src={<LazyLoadImage src={imageUrl} />} />
       <div className={messageClass}>
-        {message}
-        <br />
+        {message.trim()}
         <span className="time">{timeStampString}</span>
       </div>
     </div>

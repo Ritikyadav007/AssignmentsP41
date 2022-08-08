@@ -14,7 +14,6 @@ const messaging = getMessaging(firebaseApp.get());
 // }
 
 const GetToken = () => {
-  debugger;
   return getToken(messaging, {
     vapidKey:
       'BPNPI9-aJDGNjmidWcIdPoVHiQk0iDLVa_4lLKLjGBRROtqL7dXYicGBByt5qSjDUWklf3FzXGM87U-SXJdTKL4',
@@ -22,11 +21,11 @@ const GetToken = () => {
     .then((Token) => {
       if (Token) {
         console.log('current token for client: ', Token);
-        // Perform any other neccessary action with the token
+        // Perform other neccessary action with the token
       } else {
         // Show permission request UI
         console.log(
-          'No registration token available. Request permission to generate one.',
+          'No registration token available. Request permission to generate one.'
         );
       }
     })

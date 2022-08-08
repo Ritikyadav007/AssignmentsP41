@@ -80,3 +80,14 @@
     padding-bottom: 6px;
     font-size: 20px;
 }
+
+
+@media screen and (max-width:414px) {   
+    .friendlist_Items{
+        display: flex;
+        flex-direction: column;
+        height: 92vh;
+        background-color: rgb(243, 243, 243);
+      
+    }  
+}

@@ -4,44 +4,66 @@ import { useEffect, useState } from 'react';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import SearchIcon from '@mui/icons-material/Search';
 import { IconButton } from '@mui/material/';
-import './FriendList.css';
+import './GroupListComp.css';
 import { set, ref as dbref, get, child } from 'firebase/database';
 import { doc, getDoc, updateDoc, arrayUnion } from '@firebase/firestore';
 import { nanoid } from 'nanoid';
 import { PlusOutlined } from '@ant-design/icons';
 import { CheckboxValueType } from 'antd/lib/checkbox/Group';
+import { useSelector, useDispatch } from 'react-redux';
 import Friend from '../Friend/Friend';
 import db from '../../Services/UserService';
 import { useAuth } from '../../store/AuthContext';
 import CreateGroup from '../CreateGroup/CreateGroup';
 import realtimeDb from '../../Services/DatabaseService';
+import {
+  Group,
+  fetchGroups,
+  GroupState,
+  setState,
+} from '../../store/redux/reducers/GroupSlice';
+import store, { AppDispatch } from '../../store/redux/store';
+
+type ConnectedGroupsListComponent = {
+  groupItemList: Object[];
+  onGroupItemClick: Function;
+  selectedGroupId: string;
+};
 
 type FriendListProps = {
   handleGroupClick: Function;
+  selectedGroupData: Group;
 };
-export default function FriendList(props: FriendListProps) {
+export default function GroupListComp(props: FriendListProps) {
   const { user } = useAuth();
-  const { handleGroupClick } = props;
+  const { handleGroupClick, selectedGroupData } = props;
   const [isModalVisible, setisModalVisible] = useState(false);
   const [groupList, setGroupList] = useState<Object[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [isGroupCreated, setisGroupCreated] = useState<boolean>(false);
+  // const groups = useSelector((state: GroupState) => state.groupList);
+  // const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    const docRef = doc(db, 'users', user.uid);
-    getDoc(docRef).then((data: any) => {
-      const dbRef = dbref(realtimeDb);
-      const groupDataPromise = data.data().groups.map((id: string) => {
-        return get(child(dbRef, `groups/${id}`)).then((snapshot) => {
-          return snapshot.val();
-        });
-      });
-      Promise.all(groupDataPromise).then((values) => {
-        setGroupList(values);
-      });
-    });
+    // dispatch(fetchGroups(user.uid));
+    // const docRef = doc(db, 'users', user.uid);
+    // getDoc(docRef).then((data: any) => {
+    //   const dbRef = dbref(realtimeDb);
+    //   const groupDataPromise = data.data().groups.map((id: string) => {
+    //     return get(child(dbRef, `groups/${id}`)).then((snapshot) => {
+    //       return snapshot.val();
+    //     });
+    //   });
+    //   Promise.all(groupDataPromise).then((values) => {
+    //     setGroupList(values);
+    //   });
+    // });
     setisGroupCreated(false);
-  }, [isGroupCreated, user]);
+  }, [user]);
+
+  // useEffect(() => {
+  //   console.log(groups);
+  // }, [groups]);
 
   const handleGroupCreation = async (
     groupName: string,
@@ -114,30 +136,37 @@ export default function FriendList(props: FriendListProps) {
   };
 
   const fetchSearchedGroup = (Term: string) => {
-    const searchedGroups =
-      Term === ''
-        ? groupList
-        : groupList.filter((group: any) => {
-            return group && group.name.toLowerCase().includes(Term);
-          });
-    return searchedGroups;
+    return Term === ''
+      ? groupList
+      : groupList.filter((group: any) => {
+          return group && group.name.toLowerCase().includes(Term);
+        });
   };
 
   const renderGroupList = () => {
-    if (fetchSearchedGroup(searchTerm) === []) {
+    const groupListItems = fetchSearchedGroup(searchTerm);
+    if (groupListItems && groupListItems.length < 0) {
       return null;
     }
     return (
       <div className="friendlist_friends">
-        {fetchSearchedGroup(searchTerm).map((groupData: Object) => {
+        {groupListItems.map((groupData: any) => {
+          const { groupId } = groupData;
+          const isSelected =
+            groupId &&
+            groupId === selectedGroupData &&
+            selectedGroupData.groupId;
           return (
-            <Friend groupData={groupData} handleClick={handleGroupClick} />
+            <Friend
+              groupData={groupData}
+              handleClick={handleGroupClick}
+              isSelected={isSelected}
+            />
           );
         })}
       </div>
     );
   };
-
   return (
     <div className="friendlist">
       <div className="friendlist_Items">

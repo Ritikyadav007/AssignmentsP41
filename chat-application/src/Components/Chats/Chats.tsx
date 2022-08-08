@@ -2,20 +2,21 @@ import './Chats.css';
 import React, { useEffect, useState } from 'react';
 import { set, ref as dbref, onValue, push } from 'firebase/database';
 import { useAuth } from '../../store/AuthContext';
-import Message from './MessageItemComp/MessageItemComp';
+import MessageItemComp, { Message } from './MessageItemComp/MessageItemComp';
 import SendMessage from './SendMessage/SendMessage';
 import realtimeDb from '../../Services/DatabaseService';
 import ChatHeader from './ChatHeader/ChatHeader';
 
 type ChatsProps = {
   selectedGroupData: any | undefined;
+  handleBackButton: Function;
 };
 
 export default function Chats(props: ChatsProps) {
-  const { selectedGroupData } = props;
+  const { selectedGroupData, handleBackButton } = props;
   const { name, imageUrl, groupId } = selectedGroupData;
 
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [isLoaded, setisLoaded] = useState(false);
   const { user } = useAuth();
 
@@ -32,7 +33,7 @@ export default function Chats(props: ChatsProps) {
       const userMessages = Object.entries(data).map((val: Array<any>) => {
         return val[1];
       });
-      console.log(userMessages);
+      // console.log(userMessages);
       setMessages(userMessages);
     });
   }, [groupId, isLoaded]);
@@ -53,13 +54,19 @@ export default function Chats(props: ChatsProps) {
 
   const renderMessages = () => {
     return messages.map((data) => {
-      return <Message messageData={data} />;
+      return <MessageItemComp messageData={data} />;
     });
   };
 
   return (
     <div className="chats">
-      <ChatHeader chatName={name} chatImage={imageUrl} />
+      <div className="header">
+        <ChatHeader
+          chatName={name}
+          chatImage={imageUrl}
+          handleClick={handleBackButton}
+        />
+      </div>
       <div className="chat_body">{renderMessages()}</div>
       <div className="chat_footer">
         <SendMessage handleMessage={handleSentMessage} />

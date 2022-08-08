@@ -57,7 +57,7 @@ export default function CreateGroup(props: CreateGroupProps) {
     );
   };
 
-  const handleGroupImage = (data: any) => {
+  const handleGroupImage = (data: FileList) => {
     setGroupImage(URL.createObjectURL(data[0]));
   };
 
