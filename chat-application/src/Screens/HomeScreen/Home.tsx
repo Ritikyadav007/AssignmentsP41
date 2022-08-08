@@ -6,7 +6,7 @@ import ReactNotification from '../../Components/ReactNotification';
 import RenderChat from '../../Components/RenderChat/RenderChat';
 import Sidebar from '../../Components/SideBar/Sidebar';
 import Notification from '../../Components/Notification';
-import { onMessageListener } from '../../Services/CloudMessageService';
+// import { onMessageListener } from '../../Services/CloudMessageService';
 import './Home.css';
 import { fetchGroups, GroupState } from '../../store/redux/reducers/GroupSlice';
 import { useAuth } from '../../store/AuthContext';
@@ -44,15 +44,15 @@ export default function Home() {
     dispatch(setString('hello'));
   }, []);
 
-  onMessageListener()
-    .then((payload: any) => {
-      setShow(true);
-      setNotification({
-        title: payload.notification.title,
-        body: payload.notification.body,
-      });
-    })
-    .catch((err: any) => console.log(err));
+  // onMessageListener()
+  //   .then((payload: any) => {
+  //     setShow(true);
+  //     setNotification({
+  //       title: payload.notification.title,
+  //       body: payload.notification.body,
+  //     });
+  //   })
+  //   .catch((err: any) => console.log(err));
 
   const getGroupData = (data: any) => {
     setGroupData(data);
