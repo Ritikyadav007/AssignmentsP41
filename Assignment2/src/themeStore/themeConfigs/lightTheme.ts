@@ -1,9 +1,10 @@
 
 
+const lightTheme = {
+	primaryColor: 'black',
+	secondaryColor: 'white',
+	tertiaryColor: '#fafafa',
+	quaternary: '#e6e6e6',
+};
 
-const theme = {
-    primaryColor: 'red',
-    secondaryColor: 'blue'
-}
-
-export default theme
+export default lightTheme;

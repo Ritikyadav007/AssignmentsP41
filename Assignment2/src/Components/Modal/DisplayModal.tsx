@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { user } from '../../store/reducers';
 import AppModal from './AppModal';
@@ -8,8 +8,7 @@ type DisplayModalProps = {
     users: user[];
     editedUser: Number | null;
     CloseModal: Function;
-
-}
+};
 
 export default function DisplayModal(props: DisplayModalProps) {
     const { users, editedUser, CloseModal } = props;
@@ -22,19 +21,11 @@ export default function DisplayModal(props: DisplayModalProps) {
             footer={null}
         >
             <UserForm
-                user={
-                    users.filter(
-                        (user) => user.id == editedUser
-                    )[0]
-                }
+                user={users.filter((user) => user.id == editedUser)[0]}
                 onSubmit={(updatedUser: user) => {
-                    const updatedUsers = users.map((item) => {
-                        if (item.id === updatedUser.id) {
-                            return updatedUser;
-                        } else {
-                            return item;
-                        }
-                    });
+                    const updatedUsers = users.map((item) =>
+                        item.id === updatedUser.id ? updatedUser : item
+                    );
                     dispatch({
                         type: 'SET_DATA',
                         payload: updatedUsers,
@@ -44,5 +35,5 @@ export default function DisplayModal(props: DisplayModalProps) {
                 }}
             />
         </AppModal>
-    )
+    );
 }
