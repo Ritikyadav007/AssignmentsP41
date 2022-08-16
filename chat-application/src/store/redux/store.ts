@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import groupReducer from './reducers/GroupSlice';
-import strReducer from './reducers/StrSlice';
+import messageReducer from './reducers/MessageSlice';
 
 const store = configureStore({
   reducer: {
-    strSlice: strReducer,
+    groups: groupReducer,
+    message: messageReducer,
   },
 });
 
-export type AppDispatch = typeof store.dispatch;
 export default store;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
