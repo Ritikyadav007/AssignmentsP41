@@ -8,10 +8,9 @@ import Sidebar from '../../Components/SideBar/Sidebar';
 import Notification from '../../Components/Notification';
 // import { onMessageListener } from '../../Services/CloudMessageService';
 import './Home.css';
-import { fetchGroups, GroupState } from '../../store/redux/reducers/GroupSlice';
 import { useAuth } from '../../store/AuthContext';
-import { AppDispatch } from '../../store/redux/store';
-import { setString, StringState } from '../../store/redux/reducers/StrSlice';
+import { useAppDispatch, useAppSelector } from '../../store/redux/hooks';
+import { fetchMessages } from '../../store/redux/reducers/MessageSlice';
 
 // const AppStore = {
 //   currentUser: {},
@@ -36,13 +35,13 @@ export default function Home() {
     title: 'hello',
     body: 'hiiii',
   });
-  const stringVal = useSelector((state: StringState) => state.str);
-  const { user } = useAuth();
-  const dispatch = useDispatch();
+  const messages = useAppSelector((state) => state.message.messages);
+  const dispatch = useAppDispatch();
+  const Id: string = groupData === undefined ? null : groupData.groupId;
 
   useEffect(() => {
-    dispatch(setString('hello'));
-  }, []);
+    dispatch(fetchMessages(Id));
+  }, [Id]);
 
   // onMessageListener()
   //   .then((payload: any) => {
@@ -57,7 +56,7 @@ export default function Home() {
   const getGroupData = (data: any) => {
     setGroupData(data);
   };
-  console.log(stringVal);
+
   return (
     <div>
       <div className="home">
@@ -76,7 +75,11 @@ export default function Home() {
           selectedGroupData={groupData}
         />
         {groupData ? (
-          <Chats selectedGroupData={groupData} handleBackButton={() => {}} />
+          <Chats
+            selectedGroupData={groupData}
+            handleBackButton={() => {}}
+            selectedGroupMsg={messages}
+          />
         ) : (
           <RenderChat />
         )}
@@ -98,6 +101,7 @@ export default function Home() {
             handleBackButton={() => {
               setActiveComp('friendlist');
             }}
+            selectedGroupMsg={messages}
           />
         )}
       </div>

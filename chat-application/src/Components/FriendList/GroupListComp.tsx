@@ -10,19 +10,13 @@ import { doc, getDoc, updateDoc, arrayUnion } from '@firebase/firestore';
 import { nanoid } from 'nanoid';
 import { PlusOutlined } from '@ant-design/icons';
 import { CheckboxValueType } from 'antd/lib/checkbox/Group';
-import { useSelector, useDispatch } from 'react-redux';
 import Friend from '../Friend/Friend';
 import db from '../../Services/UserService';
 import { useAuth } from '../../store/AuthContext';
 import CreateGroup from '../CreateGroup/CreateGroup';
 import realtimeDb from '../../Services/DatabaseService';
-import {
-  Group,
-  fetchGroups,
-  GroupState,
-  setState,
-} from '../../store/redux/reducers/GroupSlice';
-import store, { AppDispatch } from '../../store/redux/store';
+import { Group, fetchGroups } from '../../store/redux/reducers/GroupSlice';
+import { useAppDispatch, useAppSelector } from '../../store/redux/hooks';
 
 type ConnectedGroupsListComponent = {
   groupItemList: Object[];
@@ -38,32 +32,16 @@ export default function GroupListComp(props: FriendListProps) {
   const { user } = useAuth();
   const { handleGroupClick, selectedGroupData } = props;
   const [isModalVisible, setisModalVisible] = useState(false);
-  const [groupList, setGroupList] = useState<Object[]>([]);
+  // const [groupList, setGroupList] = useState<Object[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [isGroupCreated, setisGroupCreated] = useState<boolean>(false);
-  // const groups = useSelector((state: GroupState) => state.groupList);
-  // const dispatch = useDispatch<AppDispatch>();
+  const groupList = useAppSelector((state) => state.groups.groupList);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // dispatch(fetchGroups(user.uid));
-    const docRef = doc(db, 'users', user.uid);
-    getDoc(docRef).then((data: any) => {
-      const dbRef = dbref(realtimeDb);
-      const groupDataPromise = data.data().groups.map((id: string) => {
-        return get(child(dbRef, `groups/${id}`)).then((snapshot) => {
-          return snapshot.val();
-        });
-      });
-      Promise.all(groupDataPromise).then((values) => {
-        setGroupList(values);
-      });
-    });
+    dispatch(fetchGroups(user.uid));
     setisGroupCreated(false);
   }, [user]);
-
-  // useEffect(() => {
-  //   console.log(groups);
-  // }, [groups]);
 
   const handleGroupCreation = async (
     groupName: string,
