@@ -41,7 +41,6 @@ export default function MessageItemComp(props: MessageProps) {
   const messageClass = `chat_message ${
     fromUser === user.uid && 'chat_reciever'
   }`;
-
   return (
     <div className={messageCompClass}>
       <Avatar src={<LazyLoadImage src={imageUrl} />} />

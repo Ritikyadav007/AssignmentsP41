@@ -6,11 +6,11 @@ import ReactNotification from '../../Components/ReactNotification';
 import RenderChat from '../../Components/RenderChat/RenderChat';
 import Sidebar from '../../Components/SideBar/Sidebar';
 import Notification from '../../Components/Notification';
-import { onMessageListener } from '../../Services/CloudMessageService';
+// import { onMessageListener } from '../../Services/CloudMessageService';
 import './Home.css';
-import { fetchGroups, GroupState } from '../../store/redux/reducers/GroupSlice';
 import { useAuth } from '../../store/AuthContext';
-import { AppDispatch } from '../../store/redux/store';
+import { useAppDispatch, useAppSelector } from '../../store/redux/hooks';
+import { fetchMessages } from '../../store/redux/reducers/MessageSlice';
 
 // const AppStore = {
 //   currentUser: {},
@@ -35,28 +35,28 @@ export default function Home() {
     title: 'hello',
     body: 'hiiii',
   });
-  const groupslist = useSelector((state: GroupState) => state.groupList);
-  const { user } = useAuth();
-  const dispatch = useDispatch<AppDispatch>();
+  const messages = useAppSelector((state) => state.message.messages);
+  const dispatch = useAppDispatch();
+  const Id: string = groupData === undefined ? null : groupData.groupId;
 
   useEffect(() => {
-    dispatch(fetchGroups(user.uid));
-  }, []);
+    dispatch(fetchMessages(Id));
+  }, [Id]);
 
-  onMessageListener()
-    .then((payload: any) => {
-      setShow(true);
-      setNotification({
-        title: payload.notification.title,
-        body: payload.notification.body,
-      });
-    })
-    .catch((err: any) => console.log(err));
+  // onMessageListener()
+  //   .then((payload: any) => {
+  //     setShow(true);
+  //     setNotification({
+  //       title: payload.notification.title,
+  //       body: payload.notification.body,
+  //     });
+  //   })
+  //   .catch((err: any) => console.log(err));
 
   const getGroupData = (data: any) => {
     setGroupData(data);
   };
-  console.log(groupslist);
+
   return (
     <div>
       <div className="home">
@@ -75,7 +75,11 @@ export default function Home() {
           selectedGroupData={groupData}
         />
         {groupData ? (
-          <Chats selectedGroupData={groupData} handleBackButton={() => {}} />
+          <Chats
+            selectedGroupData={groupData}
+            handleBackButton={() => {}}
+            selectedGroupMsg={messages}
+          />
         ) : (
           <RenderChat />
         )}
@@ -97,6 +101,7 @@ export default function Home() {
             handleBackButton={() => {
               setActiveComp('friendlist');
             }}
+            selectedGroupMsg={messages}
           />
         )}
       </div>

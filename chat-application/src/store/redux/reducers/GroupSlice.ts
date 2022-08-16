@@ -22,7 +22,7 @@ export type Group = {
 };
 
 export type GroupState = {
-  groupList: any[];
+  groupList: Group[];
   str: string;
 };
 
@@ -30,24 +30,6 @@ const initialState = {
   groupList: [{}],
   str: '',
 };
-
-// type aType = {
-//   [key: string]: {
-//     groupId: string;
-//     members: string[];
-//     messages?: {
-//       [key: string]: {
-//         fromUser: string;
-//         message: string;
-//         timestamp: number;
-//       };
-//     };
-//     name: string;
-//     imageUrl?: string;
-//   };
-// };
-
-// const a: { [key: string]: string } = { xyz: 'saa' };
 
 export const fetchGroups = createAsyncThunk(
   'groups/fetch',
@@ -63,22 +45,7 @@ export const fetchGroups = createAsyncThunk(
       });
       return Promise.all(groupDataPromise);
     });
-    console.log(groupData);
     return groupData;
-    // console.log(groupData);
-
-    // const docRef = doc(db, 'users', uid);
-    // const groupData = getDoc(docRef).then((data: any) => {
-    //   const dbRef = ref(realtimeDb);
-    //   const groupDataPromise = data.data().groups.map((id: string) => {
-    //     return get(child(dbRef, `groups/${id}`)).then((snapshot) => {
-    //       return snapshot.val();
-    //     });
-    //   });
-    //   return groupDataPromise;
-    // });
-    // console.log(groupData);
-    // return await Promise.all(groupData);
   },
 );
 
@@ -93,8 +60,6 @@ export const groupSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchGroups.fulfilled, (state, action) => {
       state.groupList = action.payload;
-      console.log(typeof state.groupList, state.groupList);
-      console.log(typeof action.payload, action.payload);
     });
   },
 });
